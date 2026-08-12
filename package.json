@@ -1,0 +1,9 @@
+{
+    "name": "ai-employee-presentation",
+    "version": "1.0.0",
+    "description": "From Prompt to AI Employee — The 5 Levels of Claude",
+    "scripts": {
+        "dev": "npx -y serve .",
+        "start": "npx -y serve ."
+    }
+}

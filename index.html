@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>From Prompt to AI Employee — The 5 Levels of Claude</title>
+    <meta name="description" content="How Claude evolves from answering questions to executing workflows. A presentation on the 5 levels of AI adoption.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar">
+        <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <!-- Slide Counter -->
+    <div class="slide-counter" id="slideCounter">
+        <span id="currentSlide">1</span> / <span id="totalSlides">14</span>
+    </div>
+
+    <!-- Navigation Arrows -->
+    <button class="nav-arrow nav-prev" id="navPrev" aria-label="Previous slide">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    </button>
+    <button class="nav-arrow nav-next" id="navNext" aria-label="Next slide">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    </button>
+
+    <!-- Navigation Dots -->
+    <div class="nav-dots" id="navDots"></div>
+
+    <!-- Slides Container -->
+    <div class="slides-container" id="slidesContainer">
+
+        <!-- ========== SLIDE 1: TITLE ========== -->
+        <section class="slide slide-title" data-slide="1">
+            <div class="slide-content">
+                <div class="badge animate-in" data-delay="0">THE AI EVOLUTION</div>
+                <h1 class="hero-title animate-in" data-delay="200">
+                    FROM <span class="gradient-text">PROMPT</span><br>TO <span class="gradient-text">AI EMPLOYEE</span>
+                </h1>
+                <p class="hero-subtitle animate-in" data-delay="400">How Claude evolves from answering questions to executing workflows</p>
+                <div class="divider animate-in" data-delay="600"></div>
+                <div class="hero-question animate-in" data-delay="800">
+                    <p>We already use AI. But are we <em>using</em> AI…</p>
+                    <p class="highlight-text">or are we still doing the work?</p>
+                </div>
+                <div class="scroll-hint animate-in" data-delay="1200">
+                    <span>Use arrow keys or swipe to navigate</span>
+                    <div class="scroll-arrow">→</div>
+                </div>
+            </div>
+            <div class="bg-glow bg-glow-1"></div>
+            <div class="bg-glow bg-glow-2"></div>
+        </section>
+
+        <!-- ========== SLIDE 2: PARADIGM SHIFT ========== -->
+        <section class="slide" data-slide="2">
+            <div class="slide-content">
+                <div class="slide-label animate-in" data-delay="0">THE PARADIGM SHIFT</div>
+                <h2 class="slide-title animate-in" data-delay="100">It's not about better prompts</h2>
+                
+                <div class="comparison-grid animate-in" data-delay="300">
+                    <div class="comparison-card old">
+                        <div class="comparison-tag">Traditional AI Usage</div>
+                        <div class="flow-horizontal">
+                            <span class="flow-item">Human</span>
+                            <span class="flow-arrow">→</span>
+                            <span class="flow-item">Task</span>
+                            <span class="flow-arrow">→</span>
+                            <span class="flow-item accent">Claude</span>
+                            <span class="flow-arrow">→</span>
+                            <span class="flow-item">Answer</span>
+                            <span class="flow-arrow">→</span>
+                            <span class="flow-item warn">Human continues the work</span>
+                        </div>
+                    </div>
+                    <div class="comparison-card new">
+                        <div class="comparison-tag">The Emerging Model</div>
+                        <div class="flow-horizontal">
+                            <span class="flow-item">Human</span>
+                            <span class="flow-arrow">→</span>
+                            <span class="flow-item">Goal</span>
+                            <span class="flow-arrow">→</span>
+                            <span class="flow-item accent">AI Agent</span>
+                            <span class="flow-arrow">→</span>
+                            <span class="flow-item accent">Tools</span>
+                            <span class="flow-arrow">→</span>
+                            <span class="flow-item accent">Actions</span>
+                            <span class="flow-arrow">→</span>
+                            <span class="flow-item success">Result</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="shift-box animate-in" data-delay="500">
+                    <div class="shift-row">
+                        <span class="shift-label old-label">The shift is not:</span>
+                        <span class="shift-value strikethrough">Better prompts → Better answers</span>
+                    </div>
+                    <div class="shift-row">
+                        <span class="shift-label new-label">The shift is:</span>
+                        <span class="shift-value highlight">Asking AI to do tasks → Designing workflows AI can own</span>
+                    </div>
+                </div>
+
+                <div class="real-example animate-in" data-delay="700">
+                    <div class="example-icon">💡</div>
+                    <div class="example-text">
+                        <strong>Real example:</strong> Instead of asking "How do I fix this bug?" and then manually fixing it, 
+                        you say "Fix this bug, run the tests, and show me the diff" — and Claude does it end-to-end.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== SLIDE 3: THE 5 LEVELS ========== -->
+        <section class="slide" data-slide="3">
+            <div class="slide-content">
+                <div class="slide-label animate-in" data-delay="0">THE FRAMEWORK</div>
+                <h2 class="slide-title animate-in" data-delay="100">The 5 Levels of AI Adoption</h2>
+                
+                <div class="levels-stack">
+                    <div class="level-card animate-in" data-delay="200" style="--level-color: #00d4ff">
+                        <div class="level-number">01</div>
+                        <div class="level-info">
+                            <h3>RESEARCH</h3>
+                            <p>Give Claude knowledge</p>
+                        </div>
+                        <div class="level-tag">KNOWLEDGE</div>
+                    </div>
+                    <div class="level-card animate-in" data-delay="350" style="--level-color: #7b61ff">
+                        <div class="level-number">02</div>
+                        <div class="level-info">
+                            <h3>MCP</h3>
+                            <p>Give Claude access</p>
+                        </div>
+                        <div class="level-tag">ACCESS</div>
+                    </div>
+                    <div class="level-card animate-in" data-delay="500" style="--level-color: #ff6b9d">
+                        <div class="level-number">03</div>
+                        <div class="level-info">
+                            <h3>SKILLS</h3>
+                            <p>Give Claude a repeatable process</p>
+                        </div>
+                        <div class="level-tag">PROCESS</div>
+                    </div>
+                    <div class="level-card animate-in" data-delay="650" style="--level-color: #ffa64d">
+                        <div class="level-number">04</div>
+                        <div class="level-info">
+                            <h3>CLAUDE CODE</h3>
+                            <p>Give Claude execution</p>
+                        </div>
+                        <div class="level-tag">EXECUTION</div>
+                    </div>
+                    <div class="level-card animate-in" data-delay="800" style="--level-color: #4dff91">
+                        <div class="level-number">05</div>
+                        <div class="level-info">
+                            <h3>AI EMPLOYEE</h3>
+                            <p>Give Claude responsibility</p>
+                        </div>
+                        <div class="level-tag">RESPONSIBILITY</div>
+                    </div>
+                </div>
+
+                <div class="evolution-bar animate-in" data-delay="1000">
+                    <div class="evo-step" style="--evo-color: #00d4ff">Knowledge</div>
+                    <div class="evo-arrow">→</div>
+                    <div class="evo-step" style="--evo-color: #7b61ff">Access</div>
+                    <div class="evo-arrow">→</div>
+                    <div class="evo-step" style="--evo-color: #ff6b9d">Process</div>
+                    <div class="evo-arrow">→</div>
+                    <div class="evo-step" style="--evo-color: #ffa64d">Execution</div>
+                    <div class="evo-arrow">→</div>
+                    <div class="evo-step" style="--evo-color: #4dff91">Responsibility</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== SLIDE 4: LEVEL 1 — RESEARCH ========== -->
+        <section class="slide" data-slide="4">
+            <div class="slide-content">
+                <div class="slide-label animate-in" data-delay="0" style="--label-color: #00d4ff">LEVEL 1</div>
+                <h2 class="slide-title animate-in" data-delay="100">RESEARCH — Give Claude a brain</h2>
+                
+                <div class="prompt-comparison animate-in" data-delay="300">
+                    <div class="prompt-card bad">
+                        <div class="prompt-label">❌ Instead of basic Q&amp;A</div>
+                        <div class="prompt-code">
+                            <code>"How do I upgrade this package?"</code>
+                        </div>
+                        <div class="prompt-result">You get generic steps. Then you spend 2 hours reading docs and fixing version conflicts yourself.</div>
+                    </div>
+                    <div class="prompt-card good">
+                        <div class="prompt-label">✅ Try delegating investigation</div>
+                        <div class="prompt-code">
+                            <code>"Read the migration guide for our core library upgrade.<br><br>1. List breaking changes affecting OUR codebase.<br>2. Identify deprecated functions we currently use.<br>3. Give me a step-by-step checklist to upgrade safely without breaking existing features."</code>
+                        </div>
+                        <div class="prompt-result">You get a tailored upgrade plan ready for your sprint.</div>
+                    </div>
+                </div>
+
+                <div class="daily-scenarios animate-in" data-delay="500">
+                    <h4 class="scenarios-title">📅 Everyday developer scenarios — sound familiar?</h4>
+                    <div class="scenario-cards">
+                        <div class="scenario-card" onclick="this.classList.toggle('flipped')">
+                            <div class="scenario-front">
+                                <span class="scenario-role-tag">Developer</span>
+                                <p class="scenario-pain">You spend 45 min reading a library's changelog, GitHub issues, and docs to decide if an upgrade is safe.</p>
+                                <span class="scenario-tap">Tap to see the AI way →</span>
+                            </div>
+                            <div class="scenario-back">
+                                <span class="scenario-role-tag ai">With Level 1</span>
+                                <p class="scenario-solution">"Analyze the changelog for React 19. List breaking changes that affect our codebase, estimate effort, and flag known bugs."</p>
+                                <span class="scenario-time">⏱️ 45 min → 3 min</span>
+                            </div>
+                        </div>
+                        <div class="scenario-card" onclick="this.classList.toggle('flipped')">
+                            <div class="scenario-front">
+                                <span class="scenario-role-tag">Team Lead / Manager</span>
+                                <p class="scenario-pain">Friday afternoon: you open 6 tabs — Jira, Slack, GitHub, emails — to write a weekly status update for leadership.</p>
+                                <span class="scenario-tap">Tap to see the AI way →</span>
+                            </div>
+                            <div class="scenario-back">
+                                <span class="scenario-role-tag ai">With Level 1</span>
+                                <p class="scenario-solution">"Summarize this week's progress across our 3 epics. Pull completed items, highlight blockers, and draft a leadership email."</p>
+                                <span class="scenario-time">⏱️ 1 hour → 5 min</span>
+                            </div>
+                        </div>
+                        <div class="scenario-card" onclick="this.classList.toggle('flipped')">
+                            <div class="scenario-front">
+                                <span class="scenario-role-tag">QA / DevOps</span>
+                                <p class="scenario-pain">A production error occurs. You spend 30 min searching Stack Overflow, docs, and past tickets to figure out why.</p>
+                                <span class="scenario-tap">Tap to see the AI way →</span>
+                            </div>
+                            <div class="scenario-back">
+                                <span class="scenario-role-tag ai">With Level 1</span>
+                                <p class="scenario-solution">"Here is the error trace. Research this error across our docs and past incidents. Give me the top 3 root causes with evidence."</p>
+                                <span class="scenario-time">⏱️ 30 min → 2 min</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="shift-banner animate-in" data-delay="700">
+                    <span class="from">Asking generic questions</span>
+                    <span class="arrow">→</span>
+                    <span class="to">Delegating research &amp; investigation</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== SLIDE 5: LEVEL 2 — MCP ========== -->
+        <section class="slide" data-slide="5">
+            <div class="slide-content">
+                <div class="slide-label animate-in" data-delay="0" style="--label-color: #7b61ff">LEVEL 2</div>
+                <h2 class="slide-title animate-in" data-delay="100">MCP — Give Claude access to your world</h2>
+                
+                <div class="mcp-comparison animate-in" data-delay="300">
+                    <div class="mcp-card">
+                        <h4 class="old-label">Without MCP (The Copy-Paste Trap)</h4>
+                        <div class="mcp-flow old-flow">
+                            <span>Open Jira</span> → <span>Copy text</span> → <span>Copy Code</span> → <span>Paste to Claude</span> → <span>Copy back</span>
+                        </div>
+                        <p class="mcp-note">You're the human copy-paste middleman. 15+ minutes lost on context switching.</p>
+                    </div>
+                    <div class="mcp-card glow">
+                        <h4 class="new-label">With MCP (Zero Copy-Pasting)</h4>
+                        <div class="mcp-flow new-flow">
+                            <span>Claude</span> → <span>Connected Tools (Jira + GitHub + Slack)</span> → <span>Instant Action</span>
+                        </div>
+                        <p class="mcp-note">Claude sees what you see. Zero copy-pasting, zero context lost.</p>
+                    </div>
+                </div>
+
+                <div class="tools-grid animate-in" data-delay="500">
+                    <div class="tool-chip"><span class="tool-icon">📧</span> Gmail</div>
+                    <div class="tool-chip"><span class="tool-icon">📊</span> Sheets</div>
+                    <div class="tool-chip"><span class="tool-icon">🐙</span> GitHub</div>
+                    <div class="tool-chip"><span class="tool-icon">📋</span> Jira</div>
+                    <div class="tool-chip"><span class="tool-icon">🗄️</span> Databases</div>
+                    <div class="tool-chip"><span class="tool-icon">🔗</span> APIs</div>
+                    <div class="tool-chip"><span class="tool-icon">💬</span> Slack</div>
+                    <div class="tool-chip"><span class="tool-icon">🏗️</span> CI/CD</div>
+                </div>
+
+                <div class="daily-scenarios animate-in" data-delay="600">
+                    <h4 class="scenarios-title">📅 What changes when Claude is connected to your tools</h4>
+                    <div class="scenario-cards">
+                        <div class="scenario-card" onclick="this.classList.toggle('flipped')">
+                            <div class="scenario-front">
+                                <span class="scenario-role-tag">Morning routine</span>
+                                <p class="scenario-pain">Open Jira → check Slack threads → check GitHub PRs → check CI status. 30 minutes lost before writing a line of code.</p>
+                                <span class="scenario-tap">Tap to see the AI way →</span>
+                            </div>
+                            <div class="scenario-back">
+                                <span class="scenario-role-tag ai">With MCP</span>
+                                <p class="scenario-solution">"Give me my morning briefing: PRs needing review, assigned Jira tickets, CI failures on my branches, and urgent Slack mentions."</p>
+                                <span class="scenario-time">⏱️ 30 min → 10 second briefing</span>
+                            </div>
+                        </div>
+                        <div class="scenario-card" onclick="this.classList.toggle('flipped')">
+                            <div class="scenario-front">
+                                <span class="scenario-role-tag">Standup prep</span>
+                                <p class="scenario-pain">Scrambling 5 minutes before standup to remember what you did yesterday, looking across 4 different apps.</p>
+                                <span class="scenario-tap">Tap to see the AI way →</span>
+                            </div>
+                            <div class="scenario-back">
+                                <span class="scenario-role-tag ai">With MCP</span>
+                                <p class="scenario-solution">"Prepare my standup bullet points: yesterday's merged PRs, closed Jira issues, current blockers, and today's planned work."</p>
+                                <span class="scenario-time">⏱️ 10 min → 5 seconds</span>
+                            </div>
+                        </div>
+                        <div class="scenario-card" onclick="this.classList.toggle('flipped')">
+                            <div class="scenario-front">
+                                <span class="scenario-role-tag">Incident response</span>
+                                <p class="scenario-pain">Server alert fires. You manually check logs, recent GitHub deployments, and Slack messages to find what broke.</p>
+                                <span class="scenario-tap">Tap to see the AI way →</span>
+                            </div>
+                            <div class="scenario-back">
+                                <span class="scenario-role-tag ai">With MCP</span>
+                                <p class="scenario-solution">"Check the last 3 GitHub deployments against our error log spike and build a timeline of what broke."</p>
+                                <span class="scenario-time">⏱️ 20 min → 1 min</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="callout animate-in" data-delay="800">
+                    MCP doesn't make Claude smarter. <strong>MCP eliminates copy-pasting by connecting Claude to your tools.</strong>
+                </div>
+
+                <div class="interactive-question animate-in" data-delay="900">
+                    <div class="question-icon">🤔</div>
+                    <p>"What systems do you touch every day that Claude currently <em>cannot</em> see?"</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== SLIDE 6: LEVEL 3 — SKILLS ========== -->
+        <section class="slide" data-slide="6">
+            <div class="slide-content">
+                <div class="slide-label animate-in" data-delay="0" style="--label-color: #ff6b9d">LEVEL 3</div>
+                <h2 class="slide-title animate-in" data-delay="100">SKILLS — Give Claude a way of working</h2>
+                
+                <div class="pain-points animate-in" data-delay="250">
+                    <p>Stop repeatedly telling Claude the same rules every day:</p>
+                    <div class="pain-tags">
+                        <span>"Follow our team format."</span>
+                        <span>"Add error handling."</span>
+                        <span>"Don't forget accessibility checks."</span>
+                        <span>"Follow our company coding style."</span>
+                    </div>
+                </div>
+
+                <div class="skills-comparison animate-in" data-delay="450">
+                    <div class="skill-flow old">
+                        <h4>Without Skills</h4>
+                        <div class="flow-steps">
+                            <span>Prompt</span> → <span>Explain rules again</span> → <span>Execute</span> → <span class="warn">Repeat every single day</span>
+                        </div>
+                    </div>
+                    <div class="skill-flow new">
+                        <h4>With Skills</h4>
+                        <div class="flow-steps">
+                            <span>Prompt</span> → <span class="accent">Saved Team Checklist</span> → <span class="success">100% Consistent Execution</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="daily-scenarios animate-in" data-delay="550">
+                    <h4 class="scenarios-title">📅 Skills your team can save once &amp; use forever</h4>
+                    <div class="scenario-cards">
+                        <div class="scenario-card" onclick="this.classList.toggle('flipped')">
+                            <div class="scenario-front">
+                                <span class="scenario-role-tag">Code Reviews</span>
+                                <p class="scenario-pain">Senior devs repeatedly write the same review comments: "Add error boundary", "Fix accessibility tag", "Avoid re-render".</p>
+                                <span class="scenario-tap">Tap to see the Skill →</span>
+                            </div>
+                            <div class="scenario-back">
+                                <span class="scenario-role-tag ai">Code Review Skill</span>
+                                <p class="scenario-solution">Save a "PR Review Skill" containing your team's exact checklist. Claude audits every PR automatically against your rules.</p>
+                                <span class="scenario-time">⏱️ 40 min → 2 min automated pass</span>
+                            </div>
+                        </div>
+                        <div class="scenario-card" onclick="this.classList.toggle('flipped')">
+                            <div class="scenario-front">
+                                <span class="scenario-role-tag">Release Notes</span>
+                                <p class="scenario-pain">Every sprint end: manually reading merged PRs to draft user release notes and changelogs in the right format.</p>
+                                <span class="scenario-tap">Tap to see the Skill →</span>
+                            </div>
+                            <div class="scenario-back">
+                                <span class="scenario-role-tag ai">Release Notes Skill</span>
+                                <p class="scenario-solution">A skill that parses merged PRs, categorizes features &amp; bug fixes, and outputs formatted release notes instantly.</p>
+                                <span class="scenario-time">⏱️ 2 hours → 1 min</span>
+                            </div>
+                        </div>
+                        <div class="scenario-card" onclick="this.classList.toggle('flipped')">
+                            <div class="scenario-front">
+                                <span class="scenario-role-tag">Incident Post-Mortems</span>
+                                <p class="scenario-pain">Writing an incident report after an outage using company templates, timeline logs, and action items.</p>
+                                <span class="scenario-tap">Tap to see the Skill →</span>
+                            </div>
+                            <div class="scenario-back">
+                                <span class="scenario-role-tag ai">Post-Mortem Skill</span>
+                                <p class="scenario-solution">A skill that reads incident logs and auto-drafts the report directly into your company post-mortem template.</p>
+                                <span class="scenario-time">⏱️ 4 hours → 15 min review</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="callout animate-in" data-delay="800">
+                    MCP connects Claude to your tools. <strong>Skills teach Claude your team's exact way of working.</strong>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== SLIDE 7: THE AGENTIC JUMP ========== -->
+        <section class="slide" data-slide="7">
+            <div class="slide-content">
+                <div class="slide-label animate-in" data-delay="0">THE TURNING POINT</div>
+                <h2 class="slide-title animate-in" data-delay="100">The Agentic Jump</h2>
+                
+                <div class="agent-comparison animate-in" data-delay="300">
+                    <div class="agent-card chatbot">
+                        <h3>Chatbot</h3>
+                        <div class="agent-flow">
+                            <div class="flow-step">Prompt</div>
+                            <div class="flow-connector">↓</div>
+                            <div class="flow-step">Response</div>
+                            <div class="flow-connector">↓</div>
+                            <div class="flow-step stop">STOP</div>
+                        </div>
+                        <p class="agent-desc">One question. One answer. Done.</p>
+                    </div>
+                    <div class="agent-card agent glow">
+                        <h3>Agent</h3>
+                        <div class="agent-flow">
+                            <div class="flow-step">Goal</div>
+                            <div class="flow-connector">↓</div>
+                            <div class="flow-step">Plan</div>
+                            <div class="flow-connector">↓</div>
+                            <div class="flow-step loop-start">Act → Observe → Reason</div>
+                            <div class="flow-connector loop-arrow">↻</div>
+                            <div class="flow-step">Verify</div>
+                            <div class="flow-connector">↓</div>
+                            <div class="flow-step success">Complete</div>
+                        </div>
+                        <p class="agent-desc">Loop until the goal is achieved.</p>
+                    </div>
+                </div>
+
+                <div class="key-insight animate-in" data-delay="500">
+                    <p>An agent is not a smarter chatbot. The important difference is <strong class="gradient-text">the loop</strong>.</p>
+                </div>
+
+                <div class="capabilities-list animate-in" data-delay="650">
+                    <div class="cap-item">Decide what to do next</div>
+                    <div class="cap-item">Use tools autonomously</div>
+                    <div class="cap-item">Observe the result</div>
+                    <div class="cap-item">Adapt its plan</div>
+                    <div class="cap-item">Continue until done</div>
+                    <div class="cap-item">Escalate when needed</div>
+                </div>
+
+                <div class="interactive-question animate-in" data-delay="800">
+                    <div class="question-icon">🤔</div>
+                    <p>If Claude encounters a failing test, should it always stop and ask?<br>
+                    Or can it: <strong>Investigate → Fix → Test → Observe → Iterate?</strong></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== SLIDE 8: LEVEL 4 — CLAUDE CODE ========== -->
+        <section class="slide" data-slide="8">
+            <div class="slide-content">
+                <div class="slide-label animate-in" data-delay="0" style="--label-color: #ffa64d">LEVEL 4</div>
+                <h2 class="slide-title animate-in" data-delay="100">CLAUDE CODE — Give Claude execution</h2>
+                
+                <div class="execution-comparison animate-in" data-delay="300">
+                    <div class="exec-card old">
+                        <h4>The Old Way (You're the Terminal Middleman)</h4>
+                        <div class="exec-steps">
+                            <p><em>"Why is this test failing?"</em></p>
+                            <p>Claude suggests a fix.</p>
+                            <div class="exec-manual">
+                                <span>You find the file in VS Code</span>
+                                <span>You paste the code snippet</span>
+                                <span>You run terminal command (`npm test`)</span>
+                                <span>You copy new error message back to Claude</span>
+                                <span class="warn">Repeat 5 times...</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="exec-card new glow">
+                        <h4>The Agentic Way (Claude Runs Terminal &amp; Fixes Code)</h4>
+                        <div class="prompt-code compact">
+                            <code>"Fix the 3 failing tests in CI.<br><br>Investigate the repo, edit the files, run tests after each edit, and loop until all tests pass green.<br><br>Show me the final git diff."</code>
+                        </div>
+                        <p class="exec-note">Claude executes in terminal &amp; fixes the code. You review the final diff over coffee ☕</p>
+                    </div>
+                </div>
+
+                <div class="daily-scenarios animate-in" data-delay="500">
+                    <h4 class="scenarios-title">📅 Everyday tasks you hand off to Claude Code today</h4>
+                    <div class="scenario-cards">
+                        <div class="scenario-card" onclick="this.classList.toggle('flipped')">
+                            <div class="scenario-front">
+                                <span class="scenario-role-tag">Monday Morning CI</span>
+                                <p class="scenario-pain">CI build is red with 3 failing unit tests. You spend your first hour reading error logs, debugging, and re-running commands.</p>
+                                <span class="scenario-tap">Tap to see the AI way →</span>
+                            </div>
+                            <div class="scenario-back">
+                                <span class="scenario-role-tag ai">Claude Code</span>
+                                <p class="scenario-solution">"Fix the failing unit tests in CI. Run the test suite after each fix to verify. Don't push."</p>
+                                <span class="scenario-time">☕ Go make your morning coffee</span>
+                            </div>
+                        </div>
+                        <div class="scenario-card" onclick="this.classList.toggle('flipped')">
+                            <div class="scenario-front">
+                                <span class="scenario-role-tag">Tedious Refactoring</span>
+                                <p class="scenario-pain">Adding TypeScript types to 15 legacy JavaScript files. Tedious, repetitive, but necessary manual labor.</p>
+                                <span class="scenario-tap">Tap to see the AI way →</span>
+                            </div>
+                            <div class="scenario-back">
+                                <span class="scenario-role-tag ai">Claude Code</span>
+                                <p class="scenario-solution">"Convert these 15 JS files to TypeScript with strict types. Run `tsc` after each file to ensure zero errors."</p>
+                                <span class="scenario-time">⏱️ 6 hours → 15 min</span>
+                            </div>
+                        </div>
+                        <div class="scenario-card" onclick="this.classList.toggle('flipped')">
+                            <div class="scenario-front">
+                                <span class="scenario-role-tag">Bug Fixing</span>
+                                <p class="scenario-pain">Users report a pagination bug. You reproduce it, trace through code, edit API offsets, add tests, and debug.</p>
+                                <span class="scenario-tap">Tap to see the AI way →</span>
+                            </div>
+                            <div class="scenario-back">
+                                <span class="scenario-role-tag ai">Claude Code</span>
+                                <p class="scenario-solution">"Page 3 shows duplicate items. Find the root cause in pagination logic, fix it, write a test, and show me the git diff."</p>
+                                <span class="scenario-time">⏱️ 2 hours → 5 min</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="shift-banner animate-in" data-delay="700">
+                    <span class="from">"Write this code snippet."</span>
+                    <span class="arrow">→</span>
+                    <span class="to">"Accomplish this engineering goal end-to-end."</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== SLIDE 9: MULTI-AGENT ========== -->
+        <section class="slide" data-slide="9">
+            <div class="slide-content">
+                <div class="slide-label animate-in" data-delay="0">WHAT'S COMING</div>
+                <h2 class="slide-title animate-in" data-delay="100">One Agent → A Team of Agents</h2>
+                
+                <div class="scenario-box animate-in" data-delay="250">
+                    <em>"Why did our checkout conversion drop this week?"</em>
+                </div>
+
+                <div class="org-chart animate-in" data-delay="400">
+                    <div class="org-node orchestrator">
+                        <span class="org-icon">🎯</span>
+                        <span>Manager Agent</span>
+                    </div>
+                    <div class="org-connectors">
+                        <div class="org-line"></div>
+                        <div class="org-line"></div>
+                        <div class="org-line"></div>
+                        <div class="org-line"></div>
+                    </div>
+                    <div class="org-children">
+                        <div class="org-node child" style="--agent-color: #00d4ff">
+                            <span class="org-icon">📊</span>
+                            <span>Data Agent</span>
+                            <small>Analyze metrics</small>
+                        </div>
+                        <div class="org-node child" style="--agent-color: #7b61ff">
+                            <span class="org-icon">⚙️</span>
+                            <span>Engineering Agent</span>
+                            <small>Check code changes</small>
+                        </div>
+                        <div class="org-node child" style="--agent-color: #ff6b9d">
+                            <span class="org-icon">🔍</span>
+                            <span>Research Agent</span>
+                            <small>External factors</small>
+                        </div>
+                        <div class="org-node child" style="--agent-color: #ffa64d">
+                            <span class="org-icon">⚖️</span>
+                            <span>Review Agent</span>
+                            <small>Challenge findings</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="result-card animate-in" data-delay="600">
+                    <div class="result-items">
+                        <span>Most likely causes</span>
+                        <span>+</span>
+                        <span>Evidence</span>
+                        <span>+</span>
+                        <span>Confidence scores</span>
+                        <span>+</span>
+                        <span>Recommended actions</span>
+                    </div>
+                </div>
+
+                <div class="callout animate-in" data-delay="750">
+                    The future is not one AI doing everything. It's <strong>specialized agents working together</strong>.
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== SLIDE 10: LEVEL 5 — AI EMPLOYEE ========== -->
+        <section class="slide" data-slide="10">
+            <div class="slide-content">
+                <div class="slide-label animate-in" data-delay="0" style="--label-color: #4dff91">LEVEL 5</div>
+                <h2 class="slide-title animate-in" data-delay="100">AI EMPLOYEE — Give AI responsibility</h2>
+                
+                <div class="definition-box animate-in" data-delay="250">
+                    An <strong>AI Employee</strong> is an AI system that <em>owns an entire operational routine</em> in the background.
+                </div>
+
+                <div class="employee-grid animate-in" data-delay="400">
+                    <div class="emp-capability">
+                        <span class="emp-icon">🎯</span>
+                        <span>Understand objectives</span>
+                    </div>
+                    <div class="emp-capability">
+                        <span class="emp-icon">🔌</span>
+                        <span>Access required systems</span>
+                    </div>
+                    <div class="emp-capability">
+                        <span class="emp-icon">📋</span>
+                        <span>Use specialized Skills</span>
+                    </div>
+                    <div class="emp-capability">
+                        <span class="emp-icon">👥</span>
+                        <span>Delegate to agents</span>
+                    </div>
+                    <div class="emp-capability">
+                        <span class="emp-icon">⚡</span>
+                        <span>Execute actions</span>
+                    </div>
+                    <div class="emp-capability">
+                        <span class="emp-icon">✅</span>
+                        <span>Verify results</span>
+                    </div>
+                    <div class="emp-capability">
+                        <span class="emp-icon">🚨</span>
+                        <span>Escalate to humans</span>
+                    </div>
+                </div>
+
+                <div class="employee-example animate-in" data-delay="550">
+                    <h4>Example: "Own our daily 8:00 AM engineering health check"</h4>
+                    <div class="employee-flow">
+                        <div class="emp-inputs">
+                            <span>GitHub</span>
+                            <span>Jira</span>
+                            <span>CI/CD</span>
+                            <span>Monitoring</span>
+                            <span>Slack</span>
+                        </div>
+                        <div class="emp-arrow">↓ Scheduled trigger every morning at 8:00 AM</div>
+                        <div class="emp-actions">
+                            <span>Check server health</span>
+                            <span>Triage new errors</span>
+                            <span>Auto-file Jira tickets</span>
+                            <span>Post Slack summary</span>
+                            <span>Escalate P1 issues</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="daily-scenarios animate-in" data-delay="700">
+                    <h4 class="scenarios-title">📅 Recurring routines Claude can own for your team</h4>
+                    <div class="scenario-cards">
+                        <div class="scenario-card" onclick="this.classList.toggle('flipped')">
+                            <div class="scenario-front">
+                                <span class="scenario-role-tag">On-Call Triage</span>
+                                <p class="scenario-pain">Monitoring server alerts 24/7, filtering out false alarms, and writing incident notes at 3 AM.</p>
+                                <span class="scenario-tap">Tap to see the AI Employee →</span>
+                            </div>
+                            <div class="scenario-back">
+                                <span class="scenario-role-tag ai">AI Employee</span>
+                                <p class="scenario-solution">Claude triages logs 24/7, suppresses false alarms, files tickets, and only pages you for real P1 outages with context.</p>
+                                <span class="scenario-time">🌙 Sleep uninterrupted on-call</span>
+                            </div>
+                        </div>
+                        <div class="scenario-card" onclick="this.classList.toggle('flipped')">
+                            <div class="scenario-front">
+                                <span class="scenario-role-tag">Sprint Retro &amp; Prep</span>
+                                <p class="scenario-pain">Every 2 weeks: gathering velocity metrics, identifying bottlenecks, updating stakeholders, planning tickets.</p>
+                                <span class="scenario-tap">Tap to see the AI Employee →</span>
+                            </div>
+                            <div class="scenario-back">
+                                <span class="scenario-role-tag ai">AI Employee</span>
+                                <p class="scenario-solution">Claude automatically compiles sprint retro data, flags delay patterns, and drafts next sprint capacity report.</p>
+                                <span class="scenario-time">⏱️ 1 full day → 15 min review</span>
+                            </div>
+                        </div>
+                        <div class="scenario-card" onclick="this.classList.toggle('flipped')">
+                            <div class="scenario-front">
+                                <span class="scenario-role-tag">New Developer Onboarding</span>
+                                <p class="scenario-pain">Answering the same 50 questions for every new hire: "Where is auth?", "How do I run local server?"</p>
+                                <span class="scenario-tap">Tap to see the AI Employee →</span>
+                            </div>
+                            <div class="scenario-back">
+                                <span class="scenario-role-tag ai">AI Employee</span>
+                                <p class="scenario-solution">Claude acts as an instant 24/7 codebase mentor: answering questions with actual code links and guiding local setup.</p>
+                                <span class="scenario-time">👋 Instant 24/7 codebase mentor</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="shift-banner animate-in" data-delay="900">
+                    <span class="from">"Human asking AI to do a task."</span>
+                    <span class="arrow">→</span>
+                    <span class="to">"AI Teammate owning a daily workflow."</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== SLIDE 11: COMPLETE EVOLUTION ========== -->
+        <section class="slide" data-slide="11">
+            <div class="slide-content">
+                <div class="slide-label animate-in" data-delay="0">THE COMPLETE PICTURE</div>
+                <h2 class="slide-title animate-in" data-delay="100">The Complete Evolution</h2>
+                
+                <div class="timeline-accordion animate-in" data-delay="300">
+                    <!-- LEVEL 1 ACCORDION -->
+                    <div class="timeline-accordion-item" style="--tl-color: #00d4ff" id="level-acc-1">
+                        <div class="timeline-item-header" onclick="toggleAccordion('level-acc-1')">
+                            <div class="tl-number">L1</div>
+                            <div class="tl-content">
+                                <h4>01 — Research (Knowledge)</h4>
+                                <p>Deep Investigation</p>
+                                <small>💬 "Read 50 pages of docs &amp; give me a 5-step upgrade summary"</small>
+                            </div>
+                            <div class="accordion-badge">▶ Quick Demo</div>
+                            <div class="accordion-chevron">▼</div>
+                        </div>
+                        <div class="accordion-body">
+                            <div class="playable-flow" data-level="1">
+                                <div class="flow-header">
+                                    <span class="flow-title">Level 1: Deep Research Agent</span>
+                                    <button class="play-btn" onclick="runFlowSimulation(event, 1)">▶ Run Demo</button>
+                                </div>
+                                <div class="flow-stepper">
+                                    <div class="flow-step-item" id="sim-1-step-1">
+                                        <div class="step-num">1</div>
+                                        <div class="step-text"><strong>Prompt:</strong> Set criteria</div>
+                                    </div>
+                                    <div class="flow-step-item" id="sim-1-step-2">
+                                        <div class="step-num">2</div>
+                                        <div class="step-text"><strong>Search:</strong> Scan docs</div>
+                                    </div>
+                                    <div class="flow-step-item" id="sim-1-step-3">
+                                        <div class="step-num">3</div>
+                                        <div class="step-text"><strong>Output:</strong> Upgrade plan</div>
+                                    </div>
+                                </div>
+                                <div class="flow-console" id="console-1">
+                                    <div class="console-header">Output Terminal <span class="status-indicator">READY</span></div>
+                                    <pre class="console-content">Click '▶ Run Demo' for a quick 2-second simulation...</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- LEVEL 2 ACCORDION -->
+                    <div class="timeline-accordion-item" style="--tl-color: #7b61ff" id="level-acc-2">
+                        <div class="timeline-item-header" onclick="toggleAccordion('level-acc-2')">
+                            <div class="tl-number">L2</div>
+                            <div class="tl-content">
+                                <h4>02 — MCP (Access)</h4>
+                                <p>Connected Systems — Zero Copy-Pasting</p>
+                                <small>💬 "Check Jira, GitHub &amp; Slack directly without copy-pasting"</small>
+                            </div>
+                            <div class="accordion-badge">▶ Quick Demo</div>
+                            <div class="accordion-chevron">▼</div>
+                        </div>
+                        <div class="accordion-body">
+                            <div class="playable-flow" data-level="2">
+                                <div class="flow-header">
+                                    <span class="flow-title">Level 2: MCP Tool Access</span>
+                                    <button class="play-btn" onclick="runFlowSimulation(event, 2)">▶ Run Demo</button>
+                                </div>
+                                <div class="flow-stepper">
+                                    <div class="flow-step-item" id="sim-2-step-1">
+                                        <div class="step-num">1</div>
+                                        <div class="step-text"><strong>Connect:</strong> Jira &amp; GitHub</div>
+                                    </div>
+                                    <div class="flow-step-item" id="sim-2-step-2">
+                                        <div class="step-num">2</div>
+                                        <div class="step-text"><strong>Fetch:</strong> Active tickets</div>
+                                    </div>
+                                    <div class="flow-step-item" id="sim-2-step-3">
+                                        <div class="step-num">3</div>
+                                        <div class="step-text"><strong>Output:</strong> Live Briefing</div>
+                                    </div>
+                                </div>
+                                <div class="flow-console" id="console-2">
+                                    <div class="console-header">Output Terminal <span class="status-indicator">READY</span></div>
+                                    <pre class="console-content">Click '▶ Run Demo' for a quick 2-second simulation...</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- LEVEL 3 ACCORDION -->
+                    <div class="timeline-accordion-item" style="--tl-color: #ff6b9d" id="level-acc-3">
+                        <div class="timeline-item-header" onclick="toggleAccordion('level-acc-3')">
+                            <div class="tl-number">L3</div>
+                            <div class="tl-content">
+                                <h4>03 — Skills (Process)</h4>
+                                <p>Saved Team Checklist</p>
+                                <small>💬 "Review code using our saved team checklist automatically"</small>
+                            </div>
+                            <div class="accordion-badge">▶ Quick Demo</div>
+                            <div class="accordion-chevron">▼</div>
+                        </div>
+                        <div class="accordion-body">
+                            <div class="playable-flow" data-level="3">
+                                <div class="flow-header">
+                                    <span class="flow-title">Level 3: Team Skill Execution</span>
+                                    <button class="play-btn" onclick="runFlowSimulation(event, 3)">▶ Run Demo</button>
+                                </div>
+                                <div class="flow-stepper">
+                                    <div class="flow-step-item" id="sim-3-step-1">
+                                        <div class="step-num">1</div>
+                                        <div class="step-text"><strong>Load:</strong> Team rules</div>
+                                    </div>
+                                    <div class="flow-step-item" id="sim-3-step-2">
+                                        <div class="step-num">2</div>
+                                        <div class="step-text"><strong>Audit:</strong> PR Code</div>
+                                    </div>
+                                    <div class="flow-step-item" id="sim-3-step-3">
+                                        <div class="step-num">3</div>
+                                        <div class="step-text"><strong>Output:</strong> Code fixes</div>
+                                    </div>
+                                </div>
+                                <div class="flow-console" id="console-3">
+                                    <div class="console-header">Output Terminal <span class="status-indicator">READY</span></div>
+                                    <pre class="console-content">Click '▶ Run Demo' for a quick 2-second simulation...</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- LEVEL 4 ACCORDION -->
+                    <div class="timeline-accordion-item" style="--tl-color: #ffa64d" id="level-acc-4">
+                        <div class="timeline-item-header" onclick="toggleAccordion('level-acc-4')">
+                            <div class="tl-number">L4</div>
+                            <div class="tl-content">
+                                <h4>04 — Claude Code (Execution)</h4>
+                                <p>Terminal &amp; Test Repair Engine</p>
+                                <small>💬 "Fix failing unit tests in terminal while I get coffee ☕"</small>
+                            </div>
+                            <div class="accordion-badge">▶ Quick Demo</div>
+                            <div class="accordion-chevron">▼</div>
+                        </div>
+                        <div class="accordion-body">
+                            <div class="playable-flow" data-level="4">
+                                <div class="flow-header">
+                                    <span class="flow-title">Level 4: Claude Code Loop</span>
+                                    <button class="play-btn" onclick="runFlowSimulation(event, 4)">▶ Run Demo</button>
+                                </div>
+                                <div class="flow-stepper">
+                                    <div class="flow-step-item" id="sim-4-step-1">
+                                        <div class="step-num">1</div>
+                                        <div class="step-text"><strong>Edit:</strong> Code file</div>
+                                    </div>
+                                    <div class="flow-step-item" id="sim-4-step-2">
+                                        <div class="step-num">2</div>
+                                        <div class="step-text"><strong>Test:</strong> Run `npm test`</div>
+                                    </div>
+                                    <div class="flow-step-item" id="sim-4-step-3">
+                                        <div class="step-num">3</div>
+                                        <div class="step-text"><strong>Output:</strong> 42/42 Green ✅</div>
+                                    </div>
+                                </div>
+                                <div class="flow-console" id="console-4">
+                                    <div class="console-header">Output Terminal <span class="status-indicator">READY</span></div>
+                                    <pre class="console-content">Click '▶ Run Demo' for a quick 2-second simulation...</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- LEVEL 5 ACCORDION -->
+                    <div class="timeline-accordion-item" style="--tl-color: #4dff91" id="level-acc-5">
+                        <div class="timeline-item-header" onclick="toggleAccordion('level-acc-5')">
+                            <div class="tl-number">L5</div>
+                            <div class="tl-content">
+                                <h4>05 — AI Employee (Responsibility)</h4>
+                                <p>Autonomous Operational Ownership</p>
+                                <small>💬 "Run our 8 AM server check &amp; update Slack automatically"</small>
+                            </div>
+                            <div class="accordion-badge">▶ Quick Demo</div>
+                            <div class="accordion-chevron">▼</div>
+                        </div>
+                        <div class="accordion-body">
+                            <div class="playable-flow" data-level="5">
+                                <div class="flow-header">
+                                    <span class="flow-title">Level 5: AI Employee Workflow</span>
+                                    <button class="play-btn" onclick="runFlowSimulation(event, 5)">▶ Run Demo</button>
+                                </div>
+                                <div class="flow-stepper">
+                                    <div class="flow-step-item" id="sim-5-step-1">
+                                        <div class="step-num">1</div>
+                                        <div class="step-text"><strong>Trigger:</strong> 8:00 AM Cron</div>
+                                    </div>
+                                    <div class="flow-step-item" id="sim-5-step-2">
+                                        <div class="step-num">2</div>
+                                        <div class="step-text"><strong>Check:</strong> Server &amp; Jira</div>
+                                    </div>
+                                    <div class="flow-step-item" id="sim-5-step-3">
+                                        <div class="step-num">3</div>
+                                        <div class="step-text"><strong>Output:</strong> Slack Briefing</div>
+                                    </div>
+                                </div>
+                                <div class="flow-console" id="console-5">
+                                    <div class="console-header">Output Terminal <span class="status-indicator">READY</span></div>
+                                    <pre class="console-content">Click '▶ Run Demo' for a quick 2-second simulation...</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="callout animate-in" data-delay="600">
+                    Every level increases how much work we can <strong>safely delegate</strong> to AI.
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== SLIDE 12: WHAT SHOULD WE DELEGATE ========== -->
+        <section class="slide" data-slide="12">
+            <div class="slide-content">
+                <div class="slide-label animate-in" data-delay="0">THE PRACTICAL QUESTION</div>
+                <h2 class="slide-title animate-in" data-delay="100">What should we delegate?</h2>
+                
+                <div class="reframe-box animate-in" data-delay="250">
+                    <p class="dont-ask">Don't ask: "What can Claude do?"</p>
+                    <p class="do-ask">Ask: <strong>"What work can I delegate to Claude?"</strong></p>
+                </div>
+
+                <div class="criteria-grid animate-in" data-delay="400">
+                    <div class="criteria-card">
+                        <span class="criteria-icon">🔄</span>
+                        <span>Repetitive</span>
+                    </div>
+                    <div class="criteria-card">
+                        <span class="criteria-icon">📐</span>
+                        <span>Well-defined</span>
+                    </div>
+                    <div class="criteria-card">
+                        <span class="criteria-icon">🔓</span>
+                        <span>Uses accessible info</span>
+                    </div>
+                    <div class="criteria-card">
+                        <span class="criteria-icon">✅</span>
+                        <span>Verifiable result</span>
+                    </div>
+                    <div class="criteria-card">
+                        <span class="criteria-icon">🤖</span>
+                        <span>Minimal human judgment</span>
+                    </div>
+                </div>
+
+                <div class="role-examples animate-in" data-delay="600">
+                    <div class="role-card">
+                        <span class="role-emoji">👨‍💻</span>
+                        <span class="role-name">Developer</span>
+                        <span class="role-task">"Can I delegate regression analysis?"</span>
+                    </div>
+                    <div class="role-card">
+                        <span class="role-emoji">🧪</span>
+                        <span class="role-name">QA</span>
+                        <span class="role-task">"Can I delegate test generation and failure analysis?"</span>
+                    </div>
+                    <div class="role-card">
+                        <span class="role-emoji">📊</span>
+                        <span class="role-name">Manager</span>
+                        <span class="role-task">"Can I delegate weekly status synthesis?"</span>
+                    </div>
+                    <div class="role-card">
+                        <span class="role-emoji">📈</span>
+                        <span class="role-name">Data Analyst</span>
+                        <span class="role-task">"Can I delegate anomaly investigation?"</span>
+                    </div>
+                    <div class="role-card">
+                        <span class="role-emoji">🎧</span>
+                        <span class="role-name">Support</span>
+                        <span class="role-task">"Can I delegate ticket triage?"</span>
+                    </div>
+                </div>
+
+                <div class="interactive-question animate-in" data-delay="800">
+                    <div class="question-icon">💭</div>
+                    <p>"What repetitive workflow are you <em>still personally operating</em>?"</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== SLIDE 13: THE FUTURE ========== -->
+        <section class="slide slide-statement" data-slide="13">
+            <div class="slide-content">
+                <div class="statement-block animate-in" data-delay="0">
+                    <p class="statement-text">AI won't just make us <strong>faster</strong> at doing work.</p>
+                    <p class="statement-text accent-text animate-in" data-delay="400">It will change <em>who</em> — or <em>what</em> — does the work.</p>
+                </div>
+                
+                <div class="divider animate-in" data-delay="700"></div>
+                
+                <div class="statement-shift animate-in" data-delay="900">
+                    <p class="old-skill">The valuable skill is no longer only:<br><span>"How good are you at prompting AI?"</span></p>
+                    <p class="new-skill">It is becoming:<br><span class="gradient-text">"How good are you at designing work for AI?"</span></p>
+                </div>
+            </div>
+            <div class="bg-glow bg-glow-1"></div>
+            <div class="bg-glow bg-glow-3"></div>
+        </section>
+
+        <!-- ========== SLIDE 14: FINAL THOUGHT ========== -->
+        <section class="slide slide-final" data-slide="14">
+            <div class="slide-content">
+                <h2 class="final-title animate-in" data-delay="0">Final Thought</h2>
+                
+                <div class="final-grid">
+                    <div class="final-row animate-in" data-delay="200">
+                        <div class="final-from">Don't ask:<br><span>"What can Claude do?"</span></div>
+                        <div class="final-arrow">→</div>
+                        <div class="final-to">Ask:<br><span class="gradient-text">"What work can I delegate?"</span></div>
+                    </div>
+                    <div class="final-row animate-in" data-delay="400">
+                        <div class="final-from">From:<br><span>Prompting AI</span></div>
+                        <div class="final-arrow">→</div>
+                        <div class="final-to">To:<br><span class="gradient-text">Designing AI workflows</span></div>
+                    </div>
+                    <div class="final-row animate-in" data-delay="600">
+                        <div class="final-from">From:<br><span>Using AI</span></div>
+                        <div class="final-arrow">→</div>
+                        <div class="final-to">To:<br><span class="gradient-text">Working with AI</span></div>
+                    </div>
+                    <div class="final-row animate-in" data-delay="800">
+                        <div class="final-from">From:<br><span>AI Assistant</span></div>
+                        <div class="final-arrow">→</div>
+                        <div class="final-to">To:<br><span class="gradient-text big">AI Employee</span></div>
+                    </div>
+                </div>
+
+                <div class="final-cta animate-in" data-delay="1100">
+                    <p>Start small. Delegate one workflow this week.</p>
+                    <p class="final-tagline">The future belongs to those who design work for AI — not just use it.</p>
+                </div>
+            </div>
+            <div class="bg-glow bg-glow-1"></div>
+            <div class="bg-glow bg-glow-2"></div>
+            <div class="bg-glow bg-glow-3"></div>
+        </section>
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
