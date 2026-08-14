@@ -1014,12 +1014,32 @@ body {
     gap: 4px;
 }
 
+/* Step-by-step animation: hidden by default, revealed sequentially */
+.anim-step {
+    opacity: 0;
+    transform: translateY(12px) scale(0.95);
+    transition: opacity 0.4s var(--ease-out-expo), transform 0.4s var(--ease-out-expo);
+}
+
+.anim-step.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* Active step highlight — the currently executing step glows */
+.anim-step.step-active {
+    box-shadow: 0 0 16px rgba(0, 212, 255, 0.3);
+    border-color: var(--accent-cyan) !important;
+}
+
 .flow-step {
     padding: 8px 20px;
     background: rgba(255, 255, 255, 0.04);
     border-radius: 8px;
     font-size: 0.85rem;
     font-weight: 500;
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
 }
 
 .flow-step.stop {
@@ -1036,8 +1056,48 @@ body {
     background: rgba(0, 212, 255, 0.08);
     color: var(--accent-cyan);
     border: 1px dashed rgba(0, 212, 255, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
+/* Loop counter badge */
+.loop-counter {
+    display: none;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    background: var(--accent-cyan);
+    color: #07080d;
+    letter-spacing: 0.5px;
+    min-width: 20px;
+    text-align: center;
+}
+
+.loop-counter.show {
+    display: inline-block;
+    animation: counterPop 0.3s var(--ease-out-expo);
+}
+
+@keyframes counterPop {
+    0% { transform: scale(0); }
+    60% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+}
+
+/* Loop pulse — the loop step pulses when looping */
+.flow-step.loop-start.looping {
+    animation: loopPulse 0.6s ease-in-out;
+}
+
+@keyframes loopPulse {
+    0% { box-shadow: 0 0 0px rgba(0, 212, 255, 0); }
+    50% { box-shadow: 0 0 25px rgba(0, 212, 255, 0.4); }
+    100% { box-shadow: 0 0 0px rgba(0, 212, 255, 0); }
+}
+
+/* Loop arrow spinning when active */
 .flow-connector {
     color: var(--text-muted);
     font-size: 0.9rem;
@@ -1045,13 +1105,17 @@ body {
 
 .flow-connector.loop-arrow {
     color: var(--accent-cyan);
-    font-size: 1.2rem;
-    animation: rotateLoop 2s ease-in-out infinite;
+    font-size: 1.4rem;
+    transition: all 0.3s ease;
 }
 
-@keyframes rotateLoop {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 1; }
+.flow-connector.loop-arrow.spinning {
+    animation: loopSpin 0.5s ease-in-out;
+}
+
+@keyframes loopSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 .agent-desc {
@@ -2245,4 +2309,193 @@ body {
         min-width: 100%;
         page-break-after: always;
     }
+}
+
+/* ===========================
+   DRAG & DROP DUSTBIN — SLIDE 1
+   =========================== */
+
+/* Draggable word */
+.draggable-word {
+    cursor: grab;
+    position: relative;
+    display: inline-block;
+    padding: 2px 12px;
+    border-radius: 8px;
+    transition: all 0.3s var(--ease-out-expo);
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.draggable-word:hover {
+    transform: scale(1.05);
+}
+
+.draggable-word:active {
+    cursor: grabbing;
+}
+
+.draggable-word.dragging {
+    opacity: 0.3;
+    transform: scale(0.9);
+}
+
+
+
+/* Drag hint text */
+.drag-hint {
+    font-size: 0.85rem;
+    color: var(--accent-pink);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    margin-top: -8px;
+    margin-bottom: 8px;
+    opacity: 0.8;
+    animation: hintBounce 1.5s ease-in-out infinite;
+}
+
+.drag-hint.hidden {
+    display: none;
+}
+
+@keyframes hintBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+
+/* Dustbin zone */
+.dustbin-zone {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    opacity: 0;
+    transform: translateY(100%);
+    transition: all 0.4s var(--ease-out-expo);
+    pointer-events: none;
+}
+
+.dustbin-zone.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+}
+
+.dustbin-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 20px 40px;
+    border-radius: 20px;
+    background: rgba(255, 85, 85, 0.08);
+    border: 2px dashed rgba(255, 85, 85, 0.3);
+    color: var(--accent-red);
+    transition: all 0.3s var(--ease-out-expo);
+}
+
+.dustbin-zone.drag-over .dustbin-icon {
+    background: rgba(255, 85, 85, 0.2);
+    border-color: var(--accent-red);
+    transform: scale(1.15);
+    box-shadow: 0 0 40px rgba(255, 85, 85, 0.3),
+                inset 0 0 30px rgba(255, 85, 85, 0.1);
+}
+
+.dustbin-zone.drag-over .dustbin-icon svg {
+    animation: binShake 0.4s ease-in-out;
+}
+
+@keyframes binShake {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-8deg); }
+    75% { transform: rotate(8deg); }
+}
+
+.dustbin-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+/* Word transformation animation */
+.draggable-word.transforming {
+    animation: wordTransform 0.8s var(--ease-out-expo) forwards;
+    pointer-events: none;
+    cursor: default;
+    border-color: transparent !important;
+}
+
+.draggable-word.transforming::after {
+    display: none;
+}
+
+@keyframes wordTransform {
+    0% { 
+        opacity: 0; 
+        transform: scale(0.5);
+        filter: blur(8px);
+    }
+    50% { 
+        opacity: 0.5;
+        transform: scale(1.2);
+        filter: blur(2px);
+    }
+    100% { 
+        opacity: 1; 
+        transform: scale(1);
+        filter: blur(0);
+    }
+}
+
+/* Transformed state — ASSISTANT */
+.draggable-word.transformed {
+    cursor: default;
+    animation: none;
+}
+
+.draggable-word.transformed::after {
+    display: none;
+}
+
+/* Particle burst effect */
+.particle-burst {
+    position: absolute;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    z-index: 100;
+}
+
+.particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    animation: particleFly 0.8s var(--ease-out-expo) forwards;
+}
+
+@keyframes particleFly {
+    0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(var(--tx), var(--ty)) scale(0);
+    }
+}
+
+/* Dustbin fade out after drop */
+.dustbin-zone.consumed {
+    opacity: 0;
+    transform: translateY(40px) scale(0.8);
+    transition: all 0.5s var(--ease-out-expo);
 }

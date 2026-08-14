@@ -40,7 +40,7 @@
             <div class="slide-content">
                 <div class="badge animate-in" data-delay="0">THE AI EVOLUTION</div>
                 <h1 class="hero-title animate-in" data-delay="200">
-                    FROM <span class="gradient-text">PROMPT</span><br>TO <span class="gradient-text">AI EMPLOYEE</span>
+                    FROM <span class="gradient-text draggable-word" id="promptWord" draggable="true">PROMPT</span><br>TO <span class="gradient-text">AI EMPLOYEE</span>
                 </h1>
                 <p class="hero-subtitle animate-in" data-delay="400">How Claude evolves from answering questions to executing workflows</p>
                 <div class="divider animate-in" data-delay="600"></div>
@@ -53,6 +53,20 @@
                     <div class="scroll-arrow">→</div>
                 </div>
             </div>
+            <!-- Dustbin Drop Zone -->
+            <div class="dustbin-zone" id="dustbinZone">
+                <div class="dustbin-icon" id="dustbinIcon">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                        <line x1="10" y1="11" x2="10" y2="17"></line>
+                        <line x1="14" y1="11" x2="14" y2="17"></line>
+                    </svg>
+                    <span class="dustbin-label">Drop here to evolve</span>
+                </div>
+            </div>
+            <!-- Particle burst container -->
+            <div class="particle-burst" id="particleBurst"></div>
             <div class="bg-glow bg-glow-1"></div>
             <div class="bg-glow bg-glow-2"></div>
         </section>
@@ -420,37 +434,42 @@
         </section>
 
         <!-- ========== SLIDE 7: THE AGENTIC JUMP ========== -->
-        <section class="slide" data-slide="7">
+        <section class="slide" data-slide="7" id="slide7">
             <div class="slide-content">
                 <div class="slide-label animate-in" data-delay="0">THE TURNING POINT</div>
                 <h2 class="slide-title animate-in" data-delay="100">The Agentic Jump</h2>
                 
                 <div class="agent-comparison animate-in" data-delay="300">
-                    <div class="agent-card chatbot">
+                    <!-- CHATBOT SIDE -->
+                    <div class="agent-card chatbot" id="chatbotCard">
                         <h3>Chatbot</h3>
-                        <div class="agent-flow">
-                            <div class="flow-step">Prompt</div>
-                            <div class="flow-connector">↓</div>
-                            <div class="flow-step">Response</div>
-                            <div class="flow-connector">↓</div>
-                            <div class="flow-step stop">STOP</div>
+                        <div class="agent-flow" id="chatbotFlow">
+                            <div class="flow-step anim-step" data-step="1">Prompt</div>
+                            <div class="flow-connector anim-step" data-step="2">↓</div>
+                            <div class="flow-step anim-step" data-step="3">Response</div>
+                            <div class="flow-connector anim-step" data-step="4">↓</div>
+                            <div class="flow-step stop anim-step" data-step="5">STOP</div>
                         </div>
-                        <p class="agent-desc">One question. One answer. Done.</p>
+                        <p class="agent-desc anim-step" data-step="6">One question. One answer. Done.</p>
                     </div>
-                    <div class="agent-card agent glow">
+                    <!-- AGENT SIDE -->
+                    <div class="agent-card agent glow" id="agentCard">
                         <h3>Agent</h3>
-                        <div class="agent-flow">
-                            <div class="flow-step">Goal</div>
-                            <div class="flow-connector">↓</div>
-                            <div class="flow-step">Plan</div>
-                            <div class="flow-connector">↓</div>
-                            <div class="flow-step loop-start">Act → Observe → Reason</div>
-                            <div class="flow-connector loop-arrow">↻</div>
-                            <div class="flow-step">Verify</div>
-                            <div class="flow-connector">↓</div>
-                            <div class="flow-step success">Complete</div>
+                        <div class="agent-flow" id="agentFlow">
+                            <div class="flow-step anim-step" data-step="1">Goal</div>
+                            <div class="flow-connector anim-step" data-step="2">↓</div>
+                            <div class="flow-step anim-step" data-step="3">Plan</div>
+                            <div class="flow-connector anim-step" data-step="4">↓</div>
+                            <div class="flow-step loop-start anim-step" data-step="5" id="loopStep">
+                                <span class="loop-label">Act → Observe → Reason</span>
+                                <span class="loop-counter" id="loopCounter"></span>
+                            </div>
+                            <div class="flow-connector loop-arrow anim-step" data-step="6" id="loopArrow">↻</div>
+                            <div class="flow-step anim-step" data-step="7" id="verifyStep">Verify</div>
+                            <div class="flow-connector anim-step" data-step="8">↓</div>
+                            <div class="flow-step success anim-step" data-step="9" id="completeStep">✅ Complete</div>
                         </div>
-                        <p class="agent-desc">Loop until the goal is achieved.</p>
+                        <p class="agent-desc anim-step" data-step="10">Loop until the goal is achieved.</p>
                     </div>
                 </div>
 

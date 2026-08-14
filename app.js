@@ -401,3 +401,314 @@ function runFlowSimulation(e, level) {
     }, 1100);
 }
 
+
+// ===========================
+// SLIDE 7: STEP-BY-STEP FLOW ANIMATION
+// ===========================
+(function initSlide7Animation() {
+    'use strict';
+
+    const slide7 = document.getElementById('slide7');
+    if (!slide7) return;
+
+    const chatbotCard = document.getElementById('chatbotCard');
+    const agentCard = document.getElementById('agentCard');
+    const loopStep = document.getElementById('loopStep');
+    const loopArrow = document.getElementById('loopArrow');
+    const loopCounter = document.getElementById('loopCounter');
+    const completeStep = document.getElementById('completeStep');
+
+    let animationTimeouts = [];
+    let hasPlayed = false;
+
+    // Watch for slide becoming active
+    const observer = new MutationObserver(() => {
+        if (slide7.classList.contains('active')) {
+            if (!hasPlayed) {
+                hasPlayed = true;
+                startAnimation();
+            }
+        } else {
+            // Reset when leaving slide
+            resetAnimation();
+            hasPlayed = false;
+        }
+    });
+    observer.observe(slide7, { attributes: true, attributeFilter: ['class'] });
+
+    function startAnimation() {
+        const chatbotSteps = chatbotCard.querySelectorAll('.anim-step');
+        const agentSteps = agentCard.querySelectorAll('.anim-step');
+        let delay = 600; // initial delay after slide appears
+        const stepInterval = 350;
+
+        // --- Chatbot: reveal steps one-by-one ---
+        chatbotSteps.forEach((step, i) => {
+            const t = setTimeout(() => {
+                step.classList.add('visible');
+                step.classList.add('step-active');
+                // Remove active from previous
+                if (i > 0) chatbotSteps[i - 1].classList.remove('step-active');
+            }, delay + i * stepInterval);
+            animationTimeouts.push(t);
+        });
+
+        // Remove active highlight from last chatbot step
+        const chatbotDone = delay + chatbotSteps.length * stepInterval;
+        animationTimeouts.push(setTimeout(() => {
+            chatbotSteps[chatbotSteps.length - 1].classList.remove('step-active');
+        }, chatbotDone));
+
+        // --- Agent: reveal steps one-by-one (starts slightly after chatbot begins) ---
+        const agentStart = delay + 200;
+
+        // Steps 1-5 (Goal → Plan → Act/Observe/Reason): reveal sequentially
+        for (let i = 0; i < 5; i++) {
+            const t = setTimeout(() => {
+                agentSteps[i].classList.add('visible');
+                agentSteps[i].classList.add('step-active');
+                if (i > 0) agentSteps[i - 1].classList.remove('step-active');
+            }, agentStart + i * stepInterval);
+            animationTimeouts.push(t);
+        }
+
+        // --- THE LOOP: 3 iterations ---
+        const loopStart = agentStart + 5 * stepInterval;
+        const loopIterations = 3;
+        const loopDuration = 800; // ms per loop iteration
+
+        for (let iter = 0; iter < loopIterations; iter++) {
+            const iterTime = loopStart + iter * loopDuration;
+
+            animationTimeouts.push(setTimeout(() => {
+                // Show loop arrow
+                loopArrow.classList.add('visible');
+
+                // Spin arrow
+                loopArrow.classList.remove('spinning');
+                void loopArrow.offsetWidth; // force reflow
+                loopArrow.classList.add('spinning');
+
+                // Pulse the loop step
+                loopStep.classList.remove('looping');
+                void loopStep.offsetWidth;
+                loopStep.classList.add('looping');
+
+                // Update counter
+                loopCounter.textContent = `#${iter + 1}`;
+                loopCounter.classList.add('show');
+            }, iterTime));
+        }
+
+        // --- After loops: Verify → Complete ---
+        const afterLoops = loopStart + loopIterations * loopDuration + 200;
+
+        // Step 6 (loop arrow) is already visible, step 7 = Verify
+        animationTimeouts.push(setTimeout(() => {
+            loopStep.classList.remove('step-active');
+            agentSteps[4].classList.remove('step-active');
+            agentSteps[6].classList.add('visible');    // Verify
+            agentSteps[6].classList.add('step-active');
+        }, afterLoops));
+
+        // Step 8 = arrow, Step 9 = Complete
+        animationTimeouts.push(setTimeout(() => {
+            agentSteps[6].classList.remove('step-active');
+            agentSteps[7].classList.add('visible');    // arrow connector
+            agentSteps[8].classList.add('visible');    // Complete
+            agentSteps[8].classList.add('step-active');
+        }, afterLoops + stepInterval));
+
+        // Step 10 = desc
+        animationTimeouts.push(setTimeout(() => {
+            agentSteps[8].classList.remove('step-active');
+            agentSteps[9].classList.add('visible');    // "Loop until goal achieved"
+        }, afterLoops + stepInterval * 2));
+    }
+
+    function resetAnimation() {
+        // Clear all pending timeouts
+        animationTimeouts.forEach(t => clearTimeout(t));
+        animationTimeouts = [];
+
+        // Reset all steps
+        const allSteps = slide7.querySelectorAll('.anim-step');
+        allSteps.forEach(step => {
+            step.classList.remove('visible', 'step-active');
+        });
+
+        // Reset loop state
+        if (loopStep) loopStep.classList.remove('looping');
+        if (loopArrow) loopArrow.classList.remove('spinning');
+        if (loopCounter) {
+            loopCounter.classList.remove('show');
+            loopCounter.textContent = '';
+        }
+    }
+})();
+
+// ===========================
+// DRAG & DROP DUSTBIN — SLIDE 1
+// ===========================
+(function initDustbinDrag() {
+    'use strict';
+
+    const promptWord = document.getElementById('promptWord');
+    const dustbinZone = document.getElementById('dustbinZone');
+    const particleBurst = document.getElementById('particleBurst');
+    const dragHint = document.getElementById('dragHint');
+
+    if (!promptWord || !dustbinZone) return;
+
+    let isTransformed = false;
+
+    // --- Desktop Drag Events ---
+    promptWord.addEventListener('dragstart', (e) => {
+        if (isTransformed) { e.preventDefault(); return; }
+        e.dataTransfer.setData('text/plain', 'PROMPT');
+        e.dataTransfer.effectAllowed = 'move';
+        promptWord.classList.add('dragging');
+        dustbinZone.classList.add('visible');
+    });
+
+    promptWord.addEventListener('dragend', () => {
+        promptWord.classList.remove('dragging');
+        if (!isTransformed) {
+            dustbinZone.classList.remove('visible');
+            dustbinZone.classList.remove('drag-over');
+        }
+    });
+
+    // Dustbin drop zone events
+    dustbinZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        dustbinZone.classList.add('drag-over');
+    });
+
+    dustbinZone.addEventListener('dragleave', () => {
+        dustbinZone.classList.remove('drag-over');
+    });
+
+    dustbinZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        if (isTransformed) return;
+        performTransformation();
+    });
+
+    // --- Touch Support for Mobile ---
+    let touchActive = false;
+
+    promptWord.addEventListener('touchstart', (e) => {
+        if (isTransformed) return;
+        touchActive = true;
+        promptWord.classList.add('dragging');
+        dustbinZone.classList.add('visible');
+        // Stop slide swipe from triggering
+        e.stopPropagation();
+    }, { passive: true });
+
+    promptWord.addEventListener('touchmove', (e) => {
+        if (!touchActive) return;
+        e.stopPropagation();
+        const touch = e.touches[0];
+        const binRect = dustbinZone.getBoundingClientRect();
+        if (touch.clientY >= binRect.top) {
+            dustbinZone.classList.add('drag-over');
+        } else {
+            dustbinZone.classList.remove('drag-over');
+        }
+    }, { passive: true });
+
+    promptWord.addEventListener('touchend', (e) => {
+        if (!touchActive) return;
+        touchActive = false;
+        promptWord.classList.remove('dragging');
+        e.stopPropagation();
+
+        // Check if finger was released over the bin
+        const touch = e.changedTouches[0];
+        const binRect = dustbinZone.getBoundingClientRect();
+        if (touch.clientY >= binRect.top &&
+            touch.clientX >= binRect.left &&
+            touch.clientX <= binRect.right) {
+            performTransformation();
+        } else {
+            dustbinZone.classList.remove('visible');
+            dustbinZone.classList.remove('drag-over');
+        }
+    }, { passive: true });
+
+    // --- Transformation Logic ---
+    function performTransformation() {
+        isTransformed = true;
+
+        // Burst particles from the dustbin
+        spawnParticles();
+
+        // Consume the dustbin
+        dustbinZone.classList.remove('drag-over');
+        dustbinZone.classList.add('consumed');
+
+        // Hide drag hint
+        if (dragHint) dragHint.classList.add('hidden');
+
+        // Morph "PROMPT" → "AI ASSISTANT"
+        setTimeout(() => {
+            promptWord.textContent = 'AI ASSISTANT';
+            promptWord.classList.remove('dragging');
+            promptWord.classList.add('transforming');
+            promptWord.draggable = false;
+
+            // Change gradient to green
+            promptWord.style.background = 'linear-gradient(135deg, #4dff91, #00d4ff)';
+            promptWord.style.webkitBackgroundClip = 'text';
+            promptWord.style.webkitTextFillColor = 'transparent';
+            promptWord.style.backgroundClip = 'text';
+        }, 200);
+
+        // Final settled state
+        setTimeout(() => {
+            promptWord.classList.remove('transforming');
+            promptWord.classList.add('transformed');
+            dustbinZone.classList.remove('visible');
+        }, 1100);
+
+        // Allow reset by double-clicking the transformed word
+        promptWord.addEventListener('dblclick', resetTransformation, { once: true });
+    }
+
+    function resetTransformation() {
+        isTransformed = false;
+        promptWord.textContent = 'PROMPT';
+        promptWord.draggable = true;
+        promptWord.classList.remove('transformed', 'transforming');
+
+        // Restore original gradient
+        promptWord.style.background = '';
+        promptWord.style.webkitBackgroundClip = '';
+        promptWord.style.webkitTextFillColor = '';
+        promptWord.style.backgroundClip = '';
+
+        dustbinZone.classList.remove('consumed');
+        if (dragHint) dragHint.classList.remove('hidden');
+    }
+
+    function spawnParticles() {
+        const colors = ['#ff5555', '#ff6b9d', '#ffa64d', '#00d4ff', '#7b61ff', '#4dff91'];
+        for (let i = 0; i < 16; i++) {
+            const p = document.createElement('div');
+            p.classList.add('particle');
+            const angle = (Math.PI * 2 * i) / 16;
+            const dist = 60 + Math.random() * 80;
+            p.style.setProperty('--tx', `${Math.cos(angle) * dist}px`);
+            p.style.setProperty('--ty', `${Math.sin(angle) * dist - 40}px`);
+            p.style.background = colors[i % colors.length];
+            p.style.width = `${4 + Math.random() * 6}px`;
+            p.style.height = p.style.width;
+            particleBurst.appendChild(p);
+        }
+        // Clean up particles after animation
+        setTimeout(() => { particleBurst.innerHTML = ''; }, 1000);
+    }
+})();
