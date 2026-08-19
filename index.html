@@ -1212,8 +1212,177 @@
             <div class="bg-glow bg-glow-3"></div>
         </section>
 
-        <!-- ========== SLIDE 14: FINAL THOUGHT ========== -->
-        <section class="slide slide-final" data-slide="14">
+        <!-- ========== SLIDE 14: DSPY — BEYOND PROMPTING ========== -->
+        <section class="slide" data-slide="14" id="slideDspy">
+            <div class="slide-content">
+                <div class="slide-label animate-in" data-delay="0" style="--label-color: #a78bfa">BONUS — THE FUTURE OF PROMPTING</div>
+                <h2 class="slide-title animate-in" data-delay="100">DSPy — Stop Writing Prompts. Write Programs.</h2>
+
+                <!-- What is DSPy -->
+                <div class="dspy-intro animate-in" data-delay="250">
+                    <p class="dspy-tagline">DSPy is a Stanford framework that <strong>replaces manual prompt engineering</strong> with code.<br>You define <em>what</em> you want → DSPy figures out <em>how</em> to ask the AI.</p>
+                </div>
+
+                <!-- Analogy -->
+                <div class="dspy-analogy animate-in" data-delay="350">
+                    <div class="analogy-card old">
+                        <div class="analogy-icon">✍️</div>
+                        <h4>Traditional Prompting</h4>
+                        <p>Like writing <strong>inline CSS</strong> on every element</p>
+                        <code>&lt;div style="color:red; font-size:14px"&gt;</code>
+                        <span class="analogy-verdict">❌ Fragile, repeated, breaks easily</span>
+                    </div>
+                    <div class="analogy-card new">
+                        <div class="analogy-icon">🏗️</div>
+                        <h4>DSPy Approach</h4>
+                        <p>Like writing a <strong>CSS class</strong> once, reusing everywhere</p>
+                        <code>&lt;div class="error-message"&gt;</code>
+                        <span class="analogy-verdict">✅ Reusable, maintainable, auto-optimized</span>
+                    </div>
+                </div>
+
+                <!-- Pros & Cons -->
+                <div class="dspy-comparison animate-in" data-delay="450">
+                    <h4 class="dspy-section-title">⚖️ Traditional Prompting vs DSPy</h4>
+                    <div class="dspy-table">
+                        <div class="dspy-table-row header">
+                            <div class="dspy-col"></div>
+                            <div class="dspy-col">Traditional Prompting</div>
+                            <div class="dspy-col">DSPy</div>
+                        </div>
+                        <div class="dspy-table-row">
+                            <div class="dspy-col label">How it works</div>
+                            <div class="dspy-col old">You manually write prompt text</div>
+                            <div class="dspy-col new">You define input/output → auto-optimized</div>
+                        </div>
+                        <div class="dspy-table-row">
+                            <div class="dspy-col label">Consistency</div>
+                            <div class="dspy-col old">Output varies — "sometimes JSON, sometimes not"</div>
+                            <div class="dspy-col new">Structured output guaranteed every time</div>
+                        </div>
+                        <div class="dspy-table-row">
+                            <div class="dspy-col label">Maintainability</div>
+                            <div class="dspy-col old">Change one word → output breaks</div>
+                            <div class="dspy-col new">Modular — swap models without rewriting</div>
+                        </div>
+                        <div class="dspy-table-row">
+                            <div class="dspy-col label">Optimization</div>
+                            <div class="dspy-col old">Manual trial-and-error "prompt hacking"</div>
+                            <div class="dspy-col new">Auto-tests hundreds of prompt variants for best result</div>
+                        </div>
+                        <div class="dspy-table-row">
+                            <div class="dspy-col label">Learning curve</div>
+                            <div class="dspy-col new">Low — anyone can write prompts</div>
+                            <div class="dspy-col old">Requires Python + ML concepts</div>
+                        </div>
+                        <div class="dspy-table-row">
+                            <div class="dspy-col label">Best for</div>
+                            <div class="dspy-col neutral">Quick one-off tasks, exploration</div>
+                            <div class="dspy-col neutral">Production pipelines, repeatable workflows</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Demo -->
+                <div class="dspy-demo animate-in" data-delay="550">
+                    <h4 class="dspy-section-title">🧪 Interactive Demo — Click to see DSPy in action</h4>
+                    <div class="dspy-demo-tabs">
+                        <button class="dspy-tab active" onclick="switchDspyDemo(0, this)">🎫 Ticket Classifier</button>
+                        <button class="dspy-tab" onclick="switchDspyDemo(1, this)">🔍 Code Reviewer</button>
+                        <button class="dspy-tab" onclick="switchDspyDemo(2, this)">📋 Meeting Summary</button>
+                    </div>
+
+                    <div class="dspy-demo-panels">
+                        <!-- Panel 1: Ticket Classifier -->
+                        <div class="dspy-panel active" id="dspy-panel-0">
+                            <div class="dspy-split">
+                                <div class="dspy-code-side">
+                                    <div class="dspy-code-label">DSPy Code</div>
+                                    <pre class="dspy-code"><span class="kw">class</span> <span class="cls">TicketClassifier</span>(dspy.Signature):
+    <span class="str">"""Classify support ticket"""</span>
+    ticket  = dspy.InputField()
+    category = dspy.OutputField()
+    urgency  = dspy.OutputField()
+
+classifier = dspy.ChainOfThought(TicketClassifier)</pre>
+                                </div>
+                                <div class="dspy-result-side">
+                                    <div class="dspy-code-label">Click ▶ to simulate</div>
+                                    <div class="dspy-input-box">
+                                        <strong>Input ticket:</strong> "I was charged twice for my subscription renewal last Tuesday. Need a refund ASAP."
+                                    </div>
+                                    <button class="dspy-run-btn" onclick="runDspyDemo(0)">▶ Run DSPy</button>
+                                    <div class="dspy-output" id="dspy-output-0">
+                                        <pre class="dspy-result-code"></pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Panel 2: Code Reviewer -->
+                        <div class="dspy-panel" id="dspy-panel-1">
+                            <div class="dspy-split">
+                                <div class="dspy-code-side">
+                                    <div class="dspy-code-label">DSPy Code</div>
+                                    <pre class="dspy-code"><span class="kw">class</span> <span class="cls">CodeReview</span>(dspy.Signature):
+    <span class="str">"""Review code for bugs"""</span>
+    code     = dspy.InputField()
+    bugs     = dspy.OutputField()
+    severity = dspy.OutputField()
+    fix      = dspy.OutputField()
+
+reviewer = dspy.ChainOfThought(CodeReview)</pre>
+                                </div>
+                                <div class="dspy-result-side">
+                                    <div class="dspy-code-label">Click ▶ to simulate</div>
+                                    <div class="dspy-input-box">
+                                        <strong>Input code:</strong> <code>query = f"SELECT * FROM users WHERE id = {user_input}"</code>
+                                    </div>
+                                    <button class="dspy-run-btn" onclick="runDspyDemo(1)">▶ Run DSPy</button>
+                                    <div class="dspy-output" id="dspy-output-1">
+                                        <pre class="dspy-result-code"></pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Panel 3: Meeting Summary -->
+                        <div class="dspy-panel" id="dspy-panel-2">
+                            <div class="dspy-split">
+                                <div class="dspy-code-side">
+                                    <div class="dspy-code-label">DSPy Code</div>
+                                    <pre class="dspy-code"><span class="kw">class</span> <span class="cls">MeetingSummary</span>(dspy.Signature):
+    <span class="str">"""Summarize meeting notes"""</span>
+    transcript   = dspy.InputField()
+    decisions    = dspy.OutputField()
+    action_items = dspy.OutputField()
+    deadlines    = dspy.OutputField()
+
+summarizer = dspy.ChainOfThought(MeetingSummary)</pre>
+                                </div>
+                                <div class="dspy-result-side">
+                                    <div class="dspy-code-label">Click ▶ to simulate</div>
+                                    <div class="dspy-input-box">
+                                        <strong>Input:</strong> "Team standup — migrating auth to OAuth2, deadline Friday. Raj to update API docs. QA blocked on staging deploy."
+                                    </div>
+                                    <button class="dspy-run-btn" onclick="runDspyDemo(2)">▶ Run DSPy</button>
+                                    <div class="dspy-output" id="dspy-output-2">
+                                        <pre class="dspy-result-code"></pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="callout animate-in" data-delay="700">
+                    DSPy doesn't replace AI — it replaces <strong>prompt babysitting</strong>. You go from tweaking strings to engineering systems.
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== SLIDE 15: FINAL THOUGHT ========== -->
+        <section class="slide slide-final" data-slide="15">
             <div class="slide-content">
                 <h2 class="final-title animate-in" data-delay="0">Final Thought</h2>
                 

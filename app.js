@@ -732,3 +732,105 @@ function runFlowSimulation(e, level) {
         setTimeout(() => { particleBurst.innerHTML = ''; }, 1000);
     }
 })();
+
+// ===========================
+// DSPY INTERACTIVE DEMO — SLIDE 14
+// ===========================
+function switchDspyDemo(index, btn) {
+    // Switch tabs
+    document.querySelectorAll('.dspy-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+
+    // Switch panels
+    document.querySelectorAll('.dspy-panel').forEach(p => p.classList.remove('active'));
+    const panel = document.getElementById('dspy-panel-' + index);
+    if (panel) panel.classList.add('active');
+}
+
+function runDspyDemo(index) {
+    const outputEl = document.querySelector('#dspy-output-' + index + ' .dspy-result-code');
+    const btn = document.querySelector('#dspy-panel-' + index + ' .dspy-run-btn');
+    if (!outputEl || !btn) return;
+
+    // Disable button
+    btn.disabled = true;
+    btn.textContent = '⏳ Running...';
+    outputEl.textContent = '';
+
+    const outputs = [
+        // Ticket Classifier
+`⚡ DSPy Compiler optimizing...
+✓ Tested 47 prompt variants
+✓ Best accuracy: 96.2%
+
+━━━ OUTPUT ━━━━━━━━━━━━━━━━━━
+{
+  "reasoning": "User mentions being charged
+  twice and requests a refund. This is
+  clearly a billing/payment issue with
+  high urgency due to financial impact.",
+  "category": "billing",
+  "urgency": 5
+}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ Structured. Consistent. Every time.`,
+
+        // Code Reviewer
+`⚡ DSPy Compiler optimizing...
+✓ Tested 52 prompt variants
+✓ Best detection rate: 98.1%
+
+━━━ OUTPUT ━━━━━━━━━━━━━━━━━━
+{
+  "reasoning": "Direct string interpolation
+  of user_input into SQL query allows
+  attackers to inject malicious SQL.",
+  "bugs": ["SQL Injection vulnerability"],
+  "severity": "🔴 CRITICAL",
+  "fix": "Use parameterized queries:\n  cursor.execute(\n    'SELECT * FROM users WHERE id = %s',\n    (user_input,)\n  )"
+}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ No prompt tweaking needed. Same result
+   across GPT-4, Claude, Gemini.`,
+
+        // Meeting Summary
+`⚡ DSPy Compiler optimizing...
+✓ Tested 39 prompt variants
+✓ Best F1 score: 94.7%
+
+━━━ OUTPUT ━━━━━━━━━━━━━━━━━━
+{
+  "reasoning": "Extracting structured info
+  from standup discussion about auth
+  migration, documentation, and blocker.",
+  "decisions": [
+    "Migrate authentication to OAuth2"
+  ],
+  "action_items": [
+    "Raj → Update API documentation",
+    "DevOps → Fix staging deploy blocker"
+  ],
+  "deadlines": [
+    "OAuth2 migration → Friday"
+  ]
+}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ Each field separate. No parsing needed.
+   Ready for Jira/Slack integration.`
+    ];
+
+    const fullOutput = outputs[index] || 'No demo available';
+    let charIndex = 0;
+
+    // Typewriter effect
+    const typeInterval = setInterval(() => {
+        if (charIndex < fullOutput.length) {
+            outputEl.textContent += fullOutput[charIndex];
+            charIndex++;
+        } else {
+            clearInterval(typeInterval);
+            btn.disabled = false;
+            btn.textContent = '▶ Run Again';
+        }
+    }, 8);
+}
