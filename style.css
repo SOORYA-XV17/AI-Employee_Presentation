@@ -206,11 +206,31 @@ body {
     min-width: 100vw;
     height: 100vh;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     position: relative;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
     padding: var(--slide-padding);
+    scroll-behavior: smooth;
+}
+
+/* Subtle scrollbar for slides */
+.slide::-webkit-scrollbar {
+    width: 4px;
+}
+
+.slide::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.slide::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 4px;
+}
+
+.slide::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.15);
 }
 
 .slide-content {
@@ -218,6 +238,15 @@ body {
     width: 100%;
     position: relative;
     z-index: 1;
+    padding-top: 20px;
+    padding-bottom: 40px;
+}
+
+/* Vertically center slides with minimal content */
+.slide-title,
+.slide-statement,
+.slide-final {
+    align-items: center;
 }
 
 /* ===========================

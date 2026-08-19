@@ -260,12 +260,32 @@
     let lastWheelTime = 0;
 
     function handleWheel(e) {
-        e.preventDefault();
-
         const now = Date.now();
         if (now - lastWheelTime < 800) return; // Debounce
 
+        const currentSlideEl = dom.slides[state.currentSlide];
+        const isVerticalScroll = Math.abs(e.deltaY) > Math.abs(e.deltaX);
         const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+
+        // If the slide has scrollable content, let it scroll first
+        if (isVerticalScroll && currentSlideEl) {
+            const scrollTop = currentSlideEl.scrollTop;
+            const scrollHeight = currentSlideEl.scrollHeight;
+            const clientHeight = currentSlideEl.clientHeight;
+            const hasScroll = scrollHeight > clientHeight + 5;
+
+            if (hasScroll) {
+                const atTop = scrollTop <= 1;
+                const atBottom = scrollTop + clientHeight >= scrollHeight - 5;
+
+                // If scrolling down but not at bottom, OR scrolling up but not at top — let the slide scroll
+                if ((e.deltaY > 0 && !atBottom) || (e.deltaY < 0 && !atTop)) {
+                    return; // Don't prevent default — let the slide scroll naturally
+                }
+            }
+        }
+
+        e.preventDefault();
 
         if (Math.abs(delta) > 30) {
             lastWheelTime = now;
