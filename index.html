@@ -217,6 +217,31 @@
                     </div>
                 </div>
 
+                <div class="arch-flow animate-in" data-delay="400" style="--arch-color: var(--accent-cyan)">
+                    <div class="arch-flow-label">How Level 1 Works</div>
+                    <div class="arch-flow-container">
+                        <div class="arch-flow-node">
+                            <span class="node-emoji">👤</span>
+                            <span>Human</span>
+                        </div>
+                        <div class="arch-flow-arrow">→</div>
+                        <div class="arch-flow-node">
+                            <span class="node-emoji">📝</span>
+                            <span>Detailed Prompt<br>+ Context</span>
+                        </div>
+                        <div class="arch-flow-arrow">→</div>
+                        <div class="arch-flow-node">
+                            <span class="node-emoji">🤖</span>
+                            <span>Claude Reads<br>Docs, Changelogs, Issues</span>
+                        </div>
+                        <div class="arch-flow-arrow">→</div>
+                        <div class="arch-flow-node">
+                            <span class="node-emoji">📋</span>
+                            <span>Synthesized<br>Report</span>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="daily-scenarios animate-in" data-delay="500">
                     <h4 class="scenarios-title">📅 Everyday developer scenarios — sound familiar?</h4>
                     <div class="scenario-cards">
@@ -301,6 +326,39 @@
                     <div class="tool-chip"><span class="tool-icon">🏗️</span> CI/CD</div>
                 </div>
 
+                <div class="arch-flow animate-in" data-delay="550" style="--arch-color: var(--accent-purple)">
+                    <div class="arch-flow-label">How MCP Connects</div>
+                    <div class="arch-flow-container">
+                        <div class="arch-flow-node">
+                            <span class="node-emoji">👤</span>
+                            <span>Human</span>
+                        </div>
+                        <div class="arch-flow-arrow">→</div>
+                        <div class="arch-flow-node">
+                            <span class="node-emoji">🤖</span>
+                            <span>Claude</span>
+                        </div>
+                        <div class="arch-flow-arrow">→</div>
+                        <div class="arch-flow-node">
+                            <span class="node-emoji">🔌</span>
+                            <span>MCP Protocol</span>
+                        </div>
+                        <div class="arch-flow-arrow">→</div>
+                        <div class="arch-flow-branch">
+                            <div class="branch-nodes">
+                                <div class="arch-flow-node"><span class="node-emoji">📋</span><span>Jira</span></div>
+                                <div class="arch-flow-node"><span class="node-emoji">🐙</span><span>GitHub</span></div>
+                                <div class="arch-flow-node"><span class="node-emoji">💬</span><span>Slack</span></div>
+                            </div>
+                        </div>
+                        <div class="arch-flow-arrow">→</div>
+                        <div class="arch-flow-node">
+                            <span class="node-emoji">📊</span>
+                            <span>Unified<br>Response</span>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="daily-scenarios animate-in" data-delay="600">
                     <h4 class="scenarios-title">📅 What changes when Claude is connected to your tools</h4>
                     <div class="scenario-cards">
@@ -381,6 +439,36 @@
                         <h4>With Skills</h4>
                         <div class="flow-steps">
                             <span>Prompt</span> → <span class="accent">Saved Team Checklist</span> → <span class="success">100% Consistent Execution</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arch-flow animate-in" data-delay="500" style="--arch-color: var(--accent-pink)">
+                    <div class="arch-flow-label">How Skills Work</div>
+                    <div class="arch-flow-container">
+                        <div class="arch-flow-node">
+                            <span class="node-emoji">👤</span>
+                            <span>Human Prompt</span>
+                        </div>
+                        <div class="arch-flow-arrow">→</div>
+                        <div class="arch-flow-node">
+                            <span class="node-emoji">🤖</span>
+                            <span>Claude</span>
+                        </div>
+                        <div class="arch-flow-arrow">→</div>
+                        <div class="arch-flow-node">
+                            <span class="node-emoji">📄</span>
+                            <span>Loads SKILL.md<br>(Team Rules)</span>
+                        </div>
+                        <div class="arch-flow-arrow">→</div>
+                        <div class="arch-flow-node">
+                            <span class="node-emoji">⚙️</span>
+                            <span>Follows Saved<br>Process</span>
+                        </div>
+                        <div class="arch-flow-arrow">→</div>
+                        <div class="arch-flow-node">
+                            <span class="node-emoji">✅</span>
+                            <span>Consistent Output<br>Every Time</span>
                         </div>
                     </div>
                 </div>
@@ -521,6 +609,44 @@
                             <code>"Fix the 3 failing tests in CI.<br><br>Investigate the repo, edit the files, run tests after each edit, and loop until all tests pass green.<br><br>Show me the final git diff."</code>
                         </div>
                         <p class="exec-note">Claude executes in terminal &amp; fixes the code. You review the final diff over coffee ☕</p>
+                    </div>
+                </div>
+
+                <div class="arch-flow animate-in" data-delay="400" style="--arch-color: var(--accent-orange)">
+                    <div class="arch-flow-label">How Claude Code Executes</div>
+                    <div class="arch-flow-container">
+                        <div class="arch-flow-node">
+                            <span class="node-emoji">👤</span>
+                            <span>Human Sets<br>Goal</span>
+                        </div>
+                        <div class="arch-flow-arrow">→</div>
+                        <div class="arch-flow-node">
+                            <span class="node-emoji">🤖</span>
+                            <span>Claude Code</span>
+                        </div>
+                        <div class="arch-flow-arrow">→</div>
+                        <div class="arch-flow-loop">
+                            <div class="loop-label">↻ Loop</div>
+                            <div class="arch-flow-node">
+                                <span class="node-emoji">📝</span>
+                                <span>Edit Code</span>
+                            </div>
+                            <div class="arch-flow-arrow">→</div>
+                            <div class="arch-flow-node">
+                                <span class="node-emoji">▶</span>
+                                <span>Run Tests</span>
+                            </div>
+                            <div class="arch-flow-arrow">→</div>
+                            <div class="arch-flow-node">
+                                <span class="node-emoji">👁️</span>
+                                <span>Observe<br>Results</span>
+                            </div>
+                        </div>
+                        <div class="arch-flow-arrow">→</div>
+                        <div class="arch-flow-node">
+                            <span class="node-emoji">✅</span>
+                            <span>All Tests<br>Green</span>
+                        </div>
                     </div>
                 </div>
 
@@ -695,6 +821,41 @@
                             <span>Auto-file Jira tickets</span>
                             <span>Post Slack summary</span>
                             <span>Escalate P1 issues</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arch-flow animate-in" data-delay="600" style="--arch-color: var(--accent-green)">
+                    <div class="arch-flow-label">How AI Employee Operates</div>
+                    <div class="arch-flow-container">
+                        <div class="arch-flow-node">
+                            <span class="node-emoji">⏰</span>
+                            <span>Scheduled Trigger<br>(8 AM)</span>
+                        </div>
+                        <div class="arch-flow-arrow">→</div>
+                        <div class="arch-flow-node">
+                            <span class="node-emoji">🤖</span>
+                            <span>AI Employee</span>
+                        </div>
+                        <div class="arch-flow-arrow">→</div>
+                        <div class="arch-flow-branch">
+                            <div class="branch-nodes">
+                                <div class="arch-flow-node"><span>Check Servers</span></div>
+                                <div class="arch-flow-node"><span>Scan Errors</span></div>
+                                <div class="arch-flow-node"><span>Review PRs</span></div>
+                            </div>
+                        </div>
+                        <div class="arch-flow-arrow">→</div>
+                        <div class="arch-flow-node">
+                            <span class="node-emoji">📊</span>
+                            <span>Auto-Report</span>
+                        </div>
+                        <div class="arch-flow-arrow">→</div>
+                        <div class="arch-flow-branch">
+                            <div class="branch-nodes">
+                                <div class="arch-flow-node"><span class="node-emoji">✅</span><span>Post to Slack</span></div>
+                                <div class="arch-flow-node"><span class="node-emoji">🚨</span><span>Escalate P1</span></div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -2269,6 +2269,126 @@ body {
 }
 
 /* ===========================
+   ARCHITECTURE FLOW DIAGRAMS
+   =========================== */
+.arch-flow {
+    margin: 24px 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.arch-flow-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--arch-color);
+    margin-bottom: 12px;
+}
+
+.arch-flow-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 16px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.arch-flow-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10px 16px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 0.78rem;
+    line-height: 1.3;
+    min-width: 90px;
+}
+
+.arch-flow-node .node-emoji {
+    font-size: 1.2rem;
+    margin-bottom: 4px;
+}
+
+.arch-flow-arrow {
+    color: var(--arch-color);
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.arch-flow-loop {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 12px 12px;
+    border: 1px dashed var(--arch-color);
+    border-radius: 12px;
+    position: relative;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.arch-flow-loop .loop-label {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg-primary);
+    padding: 0 8px;
+    font-size: 0.7rem;
+    color: var(--arch-color);
+    font-weight: 600;
+}
+
+.arch-flow-branch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.arch-flow-branch .branch-nodes {
+    display: flex;
+    gap: 8px;
+    position: relative;
+    padding-top: 12px;
+}
+
+.arch-flow-branch .branch-nodes::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 15%;
+    right: 15%;
+    height: 1px;
+    background: var(--arch-color);
+    opacity: 0.5;
+}
+
+.arch-flow-branch .branch-nodes .arch-flow-node {
+    position: relative;
+}
+
+.arch-flow-branch .branch-nodes .arch-flow-node::before {
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    width: 1px;
+    height: 12px;
+    background: var(--arch-color);
+    opacity: 0.5;
+}
+
+/* ===========================
    SCROLLBAR
    =========================== */
 ::-webkit-scrollbar {
