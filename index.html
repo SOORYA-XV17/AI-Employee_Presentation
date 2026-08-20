@@ -18,7 +18,7 @@
 
     <!-- Slide Counter -->
     <div class="slide-counter" id="slideCounter">
-        <span id="currentSlide">1</span> / <span id="totalSlides">14</span>
+        <span id="currentSlide">1</span> / <span id="totalSlides">16</span>
     </div>
 
     <!-- Navigation Arrows -->
@@ -1378,11 +1378,352 @@ summarizer = dspy.ChainOfThought(MeetingSummary)</pre>
                 <div class="callout animate-in" data-delay="700">
                     DSPy doesn't replace AI — it replaces <strong>prompt babysitting</strong>. You go from tweaking strings to engineering systems.
                 </div>
+
+                <!-- Studio Launch Hero Card -->
+                <div class="studio-launch-card animate-in" data-delay="800">
+                    <div class="studio-launch-info">
+                        <span class="studio-badge">⚡ INTERACTIVE ARCHITECTURE STUDIO</span>
+                        <h3>Agent &amp; DSPy Enterprise Workflow Simulator</h3>
+                        <p>Explore the full interactive flow for <code>"Implement CMS-123 for Genesis Card component"</code> including Jira/Git context gathering, DSPy task compilation, VS Code editor integration, and self-correcting test loop.</p>
+                    </div>
+                    <button class="studio-launch-btn" onclick="openWorkflowModal()">
+                        <span>🚀 Launch Studio Modal</span>
+                        <div class="glow-pulse"></div>
+                    </button>
+                </div>
             </div>
         </section>
 
-        <!-- ========== SLIDE 15: FINAL THOUGHT ========== -->
-        <section class="slide slide-final" data-slide="15">
+        </section>
+
+        <!-- ========== SLIDE 15: DSPY BUILT-IN FUNCTIONS & ARCHITECTURE ========== -->
+        <section class="slide" data-slide="15" id="slideDspyCode">
+            <div class="slide-content">
+                <div class="slide-label animate-in" data-delay="0" style="--label-color: #a78bfa">DSPY ARCHITECTURE &amp; BUILT-INS</div>
+                <h2 class="slide-title animate-in" data-delay="100">DSPy — Core Building Blocks &amp; Execution Flows</h2>
+
+                <!-- Main Section Navigation Tabs -->
+                <div class="dspy-master-tabs animate-in" data-delay="200">
+                    <button class="master-tab active" onclick="switchDspyMasterSection('table', this)">📊 API Building Blocks &amp; One-Liners</button>
+                    <button class="master-tab" onclick="switchDspyMasterSection('flows', this)">⚡ Simple &amp; Optimization Flows</button>
+                    <button class="master-tab" onclick="switchDspyMasterSection('cmsexample', this)">⚛️ CMS Component Example</button>
+                    <button class="master-tab" onclick="switchDspyMasterSection('lineinspector', this)">🔍 Line-by-Line Inspector</button>
+                </div>
+
+                <!-- SECTION 1: CORE BUILDING BLOCKS TABLE & ONE-LINERS -->
+                <div class="dspy-master-pane active" id="dspy-sec-table">
+                    <div class="dspy-table-container">
+                        <div class="dspy-api-table">
+                            <div class="api-table-header">
+                                <div class="col-name">DSPy API / Building Block</div>
+                                <div class="col-meaning">Simple Meaning &amp; One-Liner</div>
+                                <div class="col-example">Example / Role</div>
+                            </div>
+                            <div class="api-table-row">
+                                <div class="col-name"><code>dspy.Signature</code></div>
+                                <div class="col-meaning"><strong>What is my AI task?</strong> Defines what task takes in and produces</div>
+                                <div class="col-example"><code>AnalyzeBug</code>, <code>GenesisCardSignature</code></div>
+                            </div>
+                            <div class="api-table-row">
+                                <div class="col-name"><code>dspy.InputField()</code></div>
+                                <div class="col-meaning"><strong>What information goes in?</strong> Defines an input argument</div>
+                                <div class="col-example"><code>code</code>, <code>bug_report</code>, <code>ticket</code></div>
+                            </div>
+                            <div class="api-table-row">
+                                <div class="col-name"><code>dspy.OutputField()</code></div>
+                                <div class="col-meaning"><strong>What should come out?</strong> Defines expected structured output</div>
+                                <div class="col-example"><code>analysis</code>, <code>recommendation</code>, <code>component_tsx</code></div>
+                            </div>
+                            <div class="api-table-row">
+                                <div class="col-name"><code>dspy.Predict()</code></div>
+                                <div class="col-meaning"><strong>Run task with LLM.</strong> Executes Signature directly with LLM</div>
+                                <div class="col-example"><code>dspy.Predict(AnalyzeBug)</code></div>
+                            </div>
+                            <div class="api-table-row">
+                                <div class="col-name"><code>dspy.ChainOfThought()</code></div>
+                                <div class="col-meaning"><strong>Run with reasoning.</strong> Executes task with explicit step-by-step thinking</div>
+                                <div class="col-example"><code>dspy.ChainOfThought(AnalyzeBug)</code></div>
+                            </div>
+                            <div class="api-table-row">
+                                <div class="col-name"><code>dspy.ReAct()</code></div>
+                                <div class="col-meaning"><strong>Let LLM reason + use tools.</strong> Enables autonomous tool loops</div>
+                                <div class="col-example"><code>LLM + Jira/Git MCP tools</code></div>
+                            </div>
+                            <div class="api-table-row">
+                                <div class="col-name"><code>dspy.Example()</code></div>
+                                <div class="col-meaning"><strong>Here is a good example.</strong> Known input/output pair for training</div>
+                                <div class="col-example"><code>Previous successful CMS task</code></div>
+                            </div>
+                            <div class="api-table-row">
+                                <div class="col-name"><code>.with_inputs()</code></div>
+                                <div class="col-meaning">Marks which fields of an Example are inputs</div>
+                                <div class="col-example"><code>.with_inputs("code", "bug_report")</code></div>
+                            </div>
+                            <div class="api-table-row">
+                                <div class="col-name"><code>Metric function</code></div>
+                                <div class="col-meaning"><strong>How good is the result?</strong> Measures whether output meets quality bar</div>
+                                <div class="col-example"><code>Correctness / Unit Test Score</code></div>
+                            </div>
+                            <div class="api-table-row">
+                                <div class="col-name"><code>Optimizer</code></div>
+                                <div class="col-meaning"><strong>Find a better way to perform task.</strong> Auto-tunes instructions &amp; examples</div>
+                                <div class="col-example"><code>BootstrapFewShot</code>, <code>MIPROv2</code></div>
+                            </div>
+                            <div class="api-table-row">
+                                <div class="col-name"><code>dspy.inspect_history()</code></div>
+                                <div class="col-meaning"><strong>Show me what happened.</strong> Lets you debug exact LLM prompt &amp; response</div>
+                                <div class="col-example"><code>inspect_history(n=1)</code></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 2: SIMPLE & OPTIMIZATION FLOWS -->
+                <div class="dspy-master-pane" id="dspy-sec-flows">
+                    <div class="flows-grid">
+                        
+                        <!-- Simple Flow Card -->
+                        <div class="flow-card">
+                            <div class="flow-card-header">
+                                <span class="flow-badge cyan">⚡ EXECUTION FLOW</span>
+                                <h4>Simple Execution Flow</h4>
+                            </div>
+                            <div class="flow-diagram-visual">
+                                <div class="fd-box sig">
+                                    <strong>Signature</strong>
+                                    <div class="fd-sub">├── InputField()<br>└── OutputField()</div>
+                                </div>
+                                <div class="fd-arrow">↓</div>
+                                <div class="fd-box mod">
+                                    <strong>Module</strong>
+                                    <div class="fd-sub-branches">
+                                        <span>Predict</span>
+                                        <span>ChainOfThought</span>
+                                        <span>ReAct</span>
+                                    </div>
+                                </div>
+                                <div class="fd-arrow">↓</div>
+                                <div class="fd-box llm">
+                                    <strong>LLM Engine</strong>
+                                </div>
+                                <div class="fd-arrow">↓</div>
+                                <div class="fd-box res">
+                                    <strong>Prediction / Result</strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Optimization Flow Card -->
+                        <div class="flow-card">
+                            <div class="flow-card-header">
+                                <span class="flow-badge purple">🚀 OPTIMIZATION FLOW</span>
+                                <h4>Prompt Optimization Flow</h4>
+                            </div>
+                            <div class="flow-diagram-visual">
+                                <div class="fd-inputs-group">
+                                    <div class="fd-pill">DSPy Program</div>
+                                    <span class="plus">+</span>
+                                    <div class="fd-pill">Examples</div>
+                                    <span class="plus">+</span>
+                                    <div class="fd-pill">Eval Metric</div>
+                                </div>
+                                <div class="fd-arrow">↓</div>
+                                <div class="fd-box opt">
+                                    <strong>DSPy Optimizer</strong>
+                                    <div class="fd-sub">Auto-tests instructions &amp; example combinations</div>
+                                </div>
+                                <div class="fd-arrow">↓</div>
+                                <div class="fd-box imp">
+                                    <strong>Improved DSPy Program</strong>
+                                </div>
+                                <div class="fd-arrow">↓</div>
+                                <div class="fd-box llm">
+                                    <strong>LLM Execution (Highest Accuracy)</strong>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- SECTION 3: CMS COMPONENT EXAMPLE -->
+                <div class="dspy-master-pane" id="dspy-sec-cmsexample">
+                    <div class="cms-example-split">
+                        <div class="cms-code-side">
+                            <div class="cms-code-header">
+                                <span>🐍 CMS Component Analysis Example</span>
+                            </div>
+                            <pre class="cms-code-pre"><code><span class="kw">class</span> <span class="cls">AnalyzeComponent</span>(dspy.<span class="fn">Signature</span>):
+    <span class="str">"""Analyze CMS component requirements &amp; legacy code"""</span>
+    ticket        = dspy.<span class="fn">InputField</span>()
+    legacy_code   = dspy.<span class="fn">InputField</span>()
+    existing_code = dspy.<span class="fn">InputField</span>()
+
+    analysis     = dspy.<span class="fn">OutputField</span>()
+    requirements = dspy.<span class="fn">OutputField</span>()
+
+<span class="com"># 1. Instantiate predictor module</span>
+analyze = dspy.<span class="fn">Predict</span>(AnalyzeComponent)
+
+<span class="com"># 2. Execute with live CMS ticket &amp; code</span>
+result = analyze(
+    ticket=jira_ticket,
+    legacy_code=legacy_html,
+    existing_code=current_component
+)
+
+<span class="com"># 3. Access guaranteed outputs</span>
+print(result.analysis)
+print(result.requirements)</code></pre>
+                        </div>
+                        <div class="cms-info-side">
+                            <div class="cms-info-box">
+                                <h4>💡 How CMS-123 Component Analysis Works:</h4>
+                                <ol>
+                                    <li><strong>Signature defined:</strong> Takes 3 inputs (<code>ticket</code>, <code>legacy_code</code>, <code>existing_code</code>) and guarantees 2 outputs (<code>analysis</code>, <code>requirements</code>).</li>
+                                    <li><strong>Module executed:</strong> <code>dspy.Predict(AnalyzeComponent)</code> wraps the Signature into a runnable module.</li>
+                                    <li><strong>Zero prompt tuning:</strong> No prompt strings written manually — DSPy automatically constructs the prompt for the LLM!</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 4: LINE-BY-LINE CODE INSPECTOR -->
+                <div class="dspy-master-pane" id="dspy-sec-lineinspector">
+                    <div class="dspy-code-breakdown-grid">
+                        <div class="dspy-code-block-card">
+                            <div class="dspy-code-card-header">
+                                <span class="code-dot red"></span>
+                                <span class="code-dot yellow"></span>
+                                <span class="code-dot green"></span>
+                                <span class="code-filename">src/dspy_signatures/genesis_card.py</span>
+                            </div>
+                            <div class="dspy-code-lines">
+                                <div class="code-line-row" onclick="inspectDspyLine('sig_import', this)">
+                                    <span class="ln">01</span>
+                                    <span class="lc"><span class="kw">import</span> dspy</span>
+                                </div>
+                                <div class="code-line-row" onclick="inspectDspyLine('sig_class', this)">
+                                    <span class="ln">02</span>
+                                    <span class="lc"><span class="kw">class</span> <span class="cls">GenesisCardSignature</span>(dspy.<span class="fn">Signature</span>):</span>
+                                </div>
+                                <div class="code-line-row" onclick="inspectDspyLine('sig_doc', this)">
+                                    <span class="ln">03</span>
+                                    <span class="lc">&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"""Transform CMS-123 Jira specs &amp; legacy markup into React TSX"""</span></span>
+                                </div>
+                                <div class="code-line-row" onclick="inspectDspyLine('sig_input', this)">
+                                    <span class="ln">04</span>
+                                    <span class="lc">&nbsp;&nbsp;&nbsp;&nbsp;user_request = dspy.<span class="fn">InputField</span>(desc=<span class="str">"Original human goal"</span>)</span>
+                                </div>
+                                <div class="code-line-row" onclick="inspectDspyLine('sig_input', this)">
+                                    <span class="ln">05</span>
+                                    <span class="lc">&nbsp;&nbsp;&nbsp;&nbsp;jira_ticket  = dspy.<span class="fn">InputField</span>(desc=<span class="str">"Structured Jira specifications"</span>)</span>
+                                </div>
+                                <div class="code-line-row" onclick="inspectDspyLine('sig_input', this)">
+                                    <span class="ln">06</span>
+                                    <span class="lc">&nbsp;&nbsp;&nbsp;&nbsp;legacy_html  = dspy.<span class="fn">InputField</span>(desc=<span class="str">"Legacy HTML/CSS snippet"</span>)</span>
+                                </div>
+                                <div class="code-line-row" onclick="inspectDspyLine('sig_output', this)">
+                                    <span class="ln">07</span>
+                                    <span class="lc">&nbsp;&nbsp;&nbsp;&nbsp;component_tsx = dspy.<span class="fn">OutputField</span>(desc=<span class="str">"Generated React component"</span>)</span>
+                                </div>
+                                <div class="code-line-row" onclick="inspectDspyLine('sig_output', this)">
+                                    <span class="ln">08</span>
+                                    <span class="lc">&nbsp;&nbsp;&nbsp;&nbsp;reasoning     = dspy.<span class="fn">OutputField</span>(desc=<span class="str">"Architectural choices"</span>)</span>
+                                </div>
+                                <div class="code-line-row">
+                                    <span class="ln">09</span>
+                                    <span class="lc"></span>
+                                </div>
+                                <div class="code-line-row" onclick="inspectDspyLine('mod_class', this)">
+                                    <span class="ln">10</span>
+                                    <span class="lc"><span class="kw">class</span> <span class="cls">GenesisCardGenerator</span>(dspy.<span class="fn">Module</span>):</span>
+                                </div>
+                                <div class="code-line-row" onclick="inspectDspyLine('mod_init', this)">
+                                    <span class="ln">11</span>
+                                    <span class="lc">&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">def</span> <span class="fn">__init__</span>(self):</span>
+                                </div>
+                                <div class="code-line-row" onclick="inspectDspyLine('mod_init', this)">
+                                    <span class="ln">12</span>
+                                    <span class="lc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;super().__init__()</span>
+                                </div>
+                                <div class="code-line-row" onclick="inspectDspyLine('cot', this)">
+                                    <span class="ln">13</span>
+                                    <span class="lc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.thinker = dspy.<span class="fn">ChainOfThought</span>(GenesisCardSignature)</span>
+                                </div>
+                                <div class="code-line-row" onclick="inspectDspyLine('react', this)">
+                                    <span class="ln">14</span>
+                                    <span class="lc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.agent   = dspy.<span class="fn">ReAct</span>(GenesisCardSignature, tools=[jira_mcp, git_mcp])</span>
+                                </div>
+                                <div class="code-line-row">
+                                    <span class="ln">15</span>
+                                    <span class="lc"></span>
+                                </div>
+                                <div class="code-line-row" onclick="inspectDspyLine('mod_forward', this)">
+                                    <span class="ln">16</span>
+                                    <span class="lc">&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">def</span> <span class="fn">forward</span>(self, user_request, jira_ticket, legacy_html):</span>
+                                </div>
+                                <div class="code-line-row" onclick="inspectDspyLine('suggest', this)">
+                                    <span class="ln">17</span>
+                                    <span class="lc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dspy.<span class="fn">Suggest</span>(len(legacy_html) &gt; 0, <span class="str">"Legacy HTML cannot be empty"</span>)</span>
+                                </div>
+                                <div class="code-line-row" onclick="inspectDspyLine('predict_call', this)">
+                                    <span class="ln">18</span>
+                                    <span class="lc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;prediction = self.thinker(user_request=user_request, jira_ticket=jira_ticket, legacy_html=legacy_html)</span>
+                                </div>
+                                <div class="code-line-row" onclick="inspectDspyLine('result_ret', this)">
+                                    <span class="ln">19</span>
+                                    <span class="lc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> prediction</span>
+                                </div>
+                                <div class="code-line-row">
+                                    <span class="ln">20</span>
+                                    <span class="lc"></span>
+                                </div>
+                                <div class="code-line-row" onclick="inspectDspyLine('teleprompter', this)">
+                                    <span class="ln">21</span>
+                                    <span class="lc">teleprompter = dspy.teleprompt.<span class="fn">BootstrapFewShot</span>(metric=eval_metric)</span>
+                                </div>
+                                <div class="code-line-row" onclick="inspectDspyLine('compile', this)">
+                                    <span class="ln">22</span>
+                                    <span class="lc">compiled_agent = teleprompter.<span class="fn">compile</span>(GenesisCardGenerator(), trainset=train_data)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dspy-line-inspector-card">
+                            <div class="inspector-header">
+                                <span class="inspector-badge" id="dspyInspTag">🧩 DSPY PRIMITIVE INSPECTOR</span>
+                                <h4 id="dspyInspTitle">Click any code line on the left</h4>
+                            </div>
+                            <div class="inspector-body" id="dspyInspBody">
+                                <p class="inspector-lead">DSPy replaces brittle prompt strings with structured Python abstractions. Select a line to see how it works.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Takeaway Banner -->
+                <div class="takeaway-banner animate-in" data-delay="600">
+                    <div class="takeaway-badge">💡 KEY TAKEAWAY</div>
+                    <div class="takeaway-flow-text">
+                        <span>Signature defines the task</span>
+                        <span class="arr">→</span>
+                        <span>Fields define inputs/outputs</span>
+                        <span class="arr">→</span>
+                        <span>Module executes it</span>
+                        <span class="arr">→</span>
+                        <span>LLM performs reasoning</span>
+                        <span class="arr">→</span>
+                        <span class="highlight">Examples + Metrics enable optimization</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ========== SLIDE 16: FINAL THOUGHT ========== -->
+        <section class="slide slide-final" data-slide="16">
             <div class="slide-content">
                 <h2 class="final-title animate-in" data-delay="0">Final Thought</h2>
                 
@@ -1412,6 +1753,10 @@ summarizer = dspy.ChainOfThought(MeetingSummary)</pre>
                 <div class="final-cta animate-in" data-delay="1100">
                     <p>Start small. Delegate one workflow this week.</p>
                     <p class="final-tagline">The future belongs to those who design work for AI — not just use it.</p>
+                    
+                    <button class="studio-launch-btn secondary" onclick="openWorkflowModal()" style="margin-top: 24px;">
+                        <span>⚙️ Open Agent &amp; DSPy Workflow Studio</span>
+                    </button>
                 </div>
             </div>
             <div class="bg-glow bg-glow-1"></div>
@@ -1421,6 +1766,385 @@ summarizer = dspy.ChainOfThought(MeetingSummary)</pre>
 
     </div>
 
+    <!-- ==========================================
+         INTERACTIVE AGENT & DSPY WORKFLOW STUDIO MODAL
+         ========================================== -->
+    <div class="workflow-modal-overlay" id="workflowModal" role="dialog" aria-modal="true" onclick="handleModalBackdropClick(event)">
+        <div class="workflow-modal-container">
+            <!-- Modal Header -->
+            <div class="workflow-modal-header">
+                <div class="modal-title-group">
+                    <div class="modal-window-dots">
+                        <span class="dot red" onclick="closeWorkflowModal()"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                    </div>
+                    <span class="modal-project-title">🤖 Agent &amp; DSPy Architecture Studio — Genesis Card (CMS-123)</span>
+                </div>
+
+                <!-- Navigation Tabs -->
+                <div class="workflow-modal-tabs">
+                    <button class="modal-tab active" onclick="switchModalTab('flowchart', this)">
+                        <span>📊 Architecture Flowchart</span>
+                    </button>
+                    <button class="modal-tab" onclick="switchModalTab('folder', this)">
+                        <span>📁 Project Folder Structure</span>
+                    </button>
+                    <button class="modal-tab" onclick="switchModalTab('ide', this)">
+                        <span>💻 VS Code + AI Agent Simulator</span>
+                    </button>
+                </div>
+
+                <button class="modal-close-btn" onclick="closeWorkflowModal()" aria-label="Close modal">✕</button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="workflow-modal-body">
+
+                <!-- ================= TAB 1: FLOWCHART ================= -->
+                <div class="modal-tab-pane active" id="modal-pane-flowchart">
+                    <div class="flowchart-header">
+                        <div class="flowchart-info">
+                            <h4>Genesis Card Component Migration Workflow</h4>
+                            <p>Watch data flow from Human Prompt → Jira/Git Context → DSPy Signature → LLM Engine → Agent Code Execution &amp; Automated Testing feedback loop.</p>
+                        </div>
+                        <button class="flow-play-btn" id="flowchartPlayBtn" onclick="runFlowchartAnimation()">
+                            <span>▶ Run Step-by-Step Flow</span>
+                        </button>
+                    </div>
+
+                    <div class="flowchart-canvas">
+                        <!-- Step 1: Human -->
+                        <div class="fc-row">
+                            <div class="fc-node fc-human" id="fn-human">
+                                <div class="fc-node-icon">👤</div>
+                                <div class="fc-node-title">HUMAN USER</div>
+                                <div class="fc-node-desc">"Implement CMS-123 for Genesis Card component"</div>
+                            </div>
+                        </div>
+
+                        <div class="fc-connector-v" id="fc-conn-1">↓</div>
+
+                        <!-- Step 2: Agent Orchestrator -->
+                        <div class="fc-row">
+                            <div class="fc-node fc-agent" id="fn-agent">
+                                <div class="fc-node-icon">🤖</div>
+                                <div class="fc-node-title">AGENT / ORCHESTRATOR</div>
+                                <div class="fc-node-desc">Understands task intent and decides required tool integrations</div>
+                            </div>
+                        </div>
+
+                        <div class="fc-connector-v" id="fc-conn-2">↓ Triggers Integrations</div>
+
+                        <!-- Step 3: Tools & Systems -->
+                        <div class="fc-row fc-tools-row">
+                            <div class="fc-node fc-tool" id="fn-jira">
+                                <div class="fc-node-icon">📋</div>
+                                <div class="fc-node-title">JIRA</div>
+                                <div class="fc-node-sub">Ticket details (CMS-123)</div>
+                            </div>
+                            <div class="fc-node fc-tool" id="fn-git">
+                                <div class="fc-node-icon">🐙</div>
+                                <div class="fc-node-title">GIT REPO</div>
+                                <div class="fc-node-sub">Legacy HTML/CSS &amp; Existing TSX</div>
+                            </div>
+                            <div class="fc-node fc-tool" id="fn-mcp">
+                                <div class="fc-node-icon">🔌</div>
+                                <div class="fc-node-title">MCP / TOOLS</div>
+                                <div class="fc-node-sub">Design tokens &amp; API schemas</div>
+                            </div>
+                        </div>
+
+                        <div class="fc-connector-v" id="fc-conn-3">↓ Aggregates Data</div>
+
+                        <!-- Step 4: Context Builder -->
+                        <div class="fc-row">
+                            <div class="fc-node fc-context" id="fn-context">
+                                <div class="fc-node-icon">📦</div>
+                                <div class="fc-node-title">RELEVANT CONTEXT BUILDER</div>
+                                <div class="fc-context-bullets">
+                                    <span>• User prompt</span>
+                                    <span>• Jira ticket specifications</span>
+                                    <span>• Legacy HTML/CSS markup</span>
+                                    <span>• Existing Kia/Hyundai components</span>
+                                    <span>• Project conventions &amp; docs</span>
+                                    <span>• Tool / MCP results</span>
+                                    <span>• Execution / Test feedback</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="fc-connector-v" id="fc-conn-4">↓ Structured Input</div>
+
+                        <!-- Step 5: DSPy Framework -->
+                        <div class="fc-row">
+                            <div class="fc-node fc-dspy" id="fn-dspy">
+                                <div class="fc-node-icon">🧩</div>
+                                <div class="fc-node-title">DSPy FRAMEWORK</div>
+                                <div class="fc-node-desc">Defines AI Task → Signature → Module → Teleprompter Optimized Instructions</div>
+                            </div>
+                        </div>
+
+                        <div class="fc-connector-v" id="fc-conn-5">↓ Compiled Task Prompt</div>
+
+                        <!-- Step 6: LLM Engine -->
+                        <div class="fc-row">
+                            <div class="fc-node fc-llm" id="fn-llm">
+                                <div class="fc-node-icon">🧠</div>
+                                <div class="fc-node-title">LLM REASONING ENGINE</div>
+                                <div class="fc-node-desc">Understands context, reasons about legacy implementation, decides file generation strategy</div>
+                            </div>
+                        </div>
+
+                        <div class="fc-connector-v" id="fc-conn-6">↓ Tool Decision &amp; File Edits</div>
+
+                        <!-- Step 7: Agent Execution -->
+                        <div class="fc-row">
+                            <div class="fc-node fc-exec" id="fn-exec">
+                                <div class="fc-node-icon">⚙️</div>
+                                <div class="fc-node-title">AGENT EXECUTES</div>
+                                <div class="fc-node-desc">LLM says: "Create GenesisCard.tsx" → Agent uses workspace tools to write project files</div>
+                            </div>
+                        </div>
+
+                        <div class="fc-connector-v" id="fc-conn-7">↓</div>
+
+                        <!-- Step 8: Code Changes -->
+                        <div class="fc-row">
+                            <div class="fc-node fc-code" id="fn-code">
+                                <div class="fc-node-icon">📄</div>
+                                <div class="fc-node-title">CODE CHANGES GENERATED</div>
+                                <div class="fc-node-sub">GenesisCard.tsx / CSS Module / Jest Tests</div>
+                            </div>
+                        </div>
+
+                        <div class="fc-connector-v" id="fc-conn-8">↓</div>
+
+                        <!-- Step 9: Test & Review Loop -->
+                        <div class="fc-row">
+                            <div class="fc-node fc-test" id="fn-test">
+                                <div class="fc-node-icon">🧪</div>
+                                <div class="fc-node-title">AUTOMATED TEST &amp; AUDIT</div>
+                                <div class="fc-node-sub">Runs `npm test` &amp; verifies component build</div>
+                            </div>
+                        </div>
+
+                        <!-- Decision Split -->
+                        <div class="fc-decision-split">
+                            <!-- FAIL BRANCH -->
+                            <div class="fc-branch fail-branch" id="fn-fail-branch">
+                                <div class="fc-branch-header fail">❌ FAIL</div>
+                                <div class="fc-loop-card">
+                                    <span>New Error Trace + Result</span>
+                                    <span class="arr">↓</span>
+                                    <span>CONTEXT UPDATED</span>
+                                    <span class="arr">↓</span>
+                                    <span>DSPy → LLM → Agent Fixes</span>
+                                    <span class="arr">↓</span>
+                                    <span class="loop-tag">🔄 RETEST AGAIN</span>
+                                </div>
+                            </div>
+
+                            <!-- PASS BRANCH -->
+                            <div class="fc-branch pass-branch" id="fn-pass-branch">
+                                <div class="fc-branch-header pass">✅ PASS</div>
+                                <div class="fc-node fc-pass" id="fn-approval">
+                                    <div class="fc-node-icon">👤</div>
+                                    <div class="fc-node-title">HUMAN APPROVAL</div>
+                                    <div class="fc-node-sub">Review clean diff over coffee ☕</div>
+                                    <div class="fc-pass-badge">Commit / Push / MR</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ================= TAB 2: FOLDER STRUCTURE ================= -->
+                <div class="modal-tab-pane" id="modal-pane-folder">
+                    <div class="folder-header">
+                        <h4>Enterprise Project Directory — Where DSPy &amp; Agent Components Live</h4>
+                        <p>Recommended codebase structure separating Agent Orchestration, DSPy Signatures, MCP Integration, Context Builder, and generated UI components.</p>
+                    </div>
+
+                    <div class="folder-layout-grid">
+                        <div class="folder-tree-box">
+                            <div class="tree-header">📁 File Explorer</div>
+                            <div class="tree-content">
+                                <div class="tree-item dir"><span class="icon">📁</span> genesis-card-app/</div>
+                                <div class="tree-children">
+                                    <div class="tree-item dir"><span class="icon">📁</span> .claude/</div>
+                                    <div class="tree-children">
+                                        <div class="tree-item dir"><span class="icon">📁</span> skills/</div>
+                                        <div class="tree-children">
+                                            <div class="tree-item file skill" onclick="showFolderFileDetail('skill_genesis')"><span class="icon">📝</span> genesis-card-migration.md</div>
+                                            <div class="tree-item file skill" onclick="showFolderFileDetail('skill_review')"><span class="icon">📝</span> code-review.md</div>
+                                        </div>
+                                        <div class="tree-item file config" onclick="showFolderFileDetail('mcp_config')"><span class="icon">⚙️</span> mcp.json</div>
+                                    </div>
+                                    <div class="tree-item dir"><span class="icon">📁</span> src/</div>
+                                    <div class="tree-children">
+                                        <div class="tree-item dir highlight"><span class="icon">📁</span> agent/ <span class="tag">AGENT CORE</span></div>
+                                        <div class="tree-children">
+                                            <div class="tree-item file code" onclick="showFolderFileDetail('agent_orch')"><span class="icon">🐍</span> orchestrator.py</div>
+                                            <div class="tree-item file code" onclick="showFolderFileDetail('agent_ctx')"><span class="icon">🐍</span> context_builder.py</div>
+                                        </div>
+                                        <div class="tree-item dir highlight dspy"><span class="icon">📁</span> dspy_signatures/ <span class="tag dspy">DSPy MODULES</span></div>
+                                        <div class="tree-children">
+                                            <div class="tree-item file code dspy-file active" onclick="showFolderFileDetail('dspy_sig', this)"><span class="icon">🧩</span> genesis_card_signature.py</div>
+                                            <div class="tree-item file code dspy-file" onclick="showFolderFileDetail('dspy_mod', this)"><span class="icon">🧩</span> component_generator.py</div>
+                                        </div>
+                                        <div class="tree-item dir"><span class="icon">📁</span> tools/ <span class="tag tool">MCP TOOLS</span></div>
+                                        <div class="tree-children">
+                                            <div class="tree-item file code" onclick="showFolderFileDetail('mcp_jira', this)"><span class="icon">🔌</span> jira_mcp.py</div>
+                                            <div class="tree-item file code" onclick="showFolderFileDetail('mcp_git', this)"><span class="icon">🔌</span> git_mcp.py</div>
+                                            <div class="tree-item file code" onclick="showFolderFileDetail('test_runner', this)"><span class="icon">🧪</span> test_runner.py</div>
+                                        </div>
+                                        <div class="tree-item dir"><span class="icon">📁</span> components/ <span class="tag comp">GENERATED UI</span></div>
+                                        <div class="tree-children">
+                                            <div class="tree-item file tsx" onclick="showFolderFileDetail('genesis_tsx', this)"><span class="icon">⚛️</span> GenesisCard.tsx</div>
+                                            <div class="tree-item file css" onclick="showFolderFileDetail('genesis_css', this)"><span class="icon">🎨</span> GenesisCard.module.css</div>
+                                            <div class="tree-item file test" onclick="showFolderFileDetail('genesis_test', this)"><span class="icon">🧪</span> GenesisCard.test.tsx</div>
+                                        </div>
+                                    </div>
+                                    <div class="tree-item file config" onclick="showFolderFileDetail('dspy_config', this)"><span class="icon">🐍</span> dspy.config.py</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- File Code Detail View -->
+                        <div class="folder-detail-box">
+                            <div class="detail-header" id="folderDetailTitle">🧩 src/dspy_signatures/genesis_card_signature.py</div>
+                            <div class="detail-body">
+                                <pre class="detail-code-pre" id="folderDetailCode"><code>import dspy
+
+class GenesisCardSignature(dspy.Signature):
+    """
+    DSPy Task Signature for transforming CMS-123 Jira requirements 
+    and legacy HTML/CSS into a modern React GenesisCard component.
+    """
+    user_request   = dspy.InputField(desc="Original human prompt")
+    jira_ticket    = dspy.InputField(desc="JSON specification from CMS-123")
+    legacy_html    = dspy.InputField(desc="Legacy Genesis Card HTML & CSS markup")
+    existing_cards = dspy.InputField(desc="Existing Kia/Hyundai TSX component code")
+    project_rules  = dspy.InputField(desc="TypeScript & CSS module conventions")
+    
+    component_tsx  = dspy.OutputField(desc="Production-ready TypeScript React component")
+    module_css     = dspy.OutputField(desc="CSS Module with CSS variables and glassmorphic styling")
+    unit_tests     = dspy.OutputField(desc="Jest/Vitest test file covering all card states")
+    reasoning      = dspy.OutputField(desc="Architectural decisions & prop choices")
+
+class GenesisCardGenerator(dspy.Module):
+    def __init__(self):
+        super().__init__()
+        # Uses ChainOfThought with DSPy Teleprompter for prompt optimization
+        self.prog = dspy.ChainOfThought(GenesisCardSignature)
+
+    def forward(self, context_payload):
+        return self.prog(**context_payload)</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ================= TAB 3: VS CODE + AGENT SIMULATOR ================= -->
+                <div class="modal-tab-pane" id="modal-pane-ide">
+                    <div class="ide-container">
+                        
+                        <!-- VS Code Window Topbar -->
+                        <div class="ide-topbar">
+                            <div class="ide-file-tabs">
+                                <button class="ide-tab active" id="ideTab-tsx" onclick="switchIdeTab('tsx')">⚛️ GenesisCard.tsx</button>
+                                <button class="ide-tab" id="ideTab-sig" onclick="switchIdeTab('sig')">🧩 GenesisCardSignature.py</button>
+                                <button class="ide-tab" id="ideTab-context" onclick="switchIdeTab('context')">📦 context_payload.json</button>
+                                <button class="ide-tab" id="ideTab-test" onclick="switchIdeTab('test')">🧪 GenesisCard.test.tsx</button>
+                                <button class="ide-tab" id="ideTab-term" onclick="switchIdeTab('term')">🖥️ Terminal Log</button>
+                            </div>
+                            <div class="ide-run-controls">
+                                <button class="ide-run-sim-btn" id="ideRunBtn" onclick="startIdeAgentSimulation()">
+                                    <span>▶ Run Live Agent Simulation</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="ide-main-split">
+                            <!-- Left: Code Editor Pane -->
+                            <div class="ide-editor-pane">
+                                <div class="editor-header">
+                                    <span id="ideActiveFileName">src/components/GenesisCard.tsx</span>
+                                    <span class="ide-status" id="ideFileStatus">READY</span>
+                                </div>
+                                <div class="editor-content">
+                                    <pre class="editor-code" id="ideCodeDisplay"><code>import React from 'react';
+import styles from './GenesisCard.module.css';
+
+export interface GenesisCardProps {
+    title: string;
+    subtitle?: string;
+    badgeText?: string;
+    badgeType?: 'primary' | 'success' | 'warning';
+    imageUrl?: string;
+    price?: string;
+    onClick?: () => void;
+}
+
+export const GenesisCard: React.FC&lt;GenesisCardProps&gt; = ({
+    title,
+    subtitle,
+    badgeText = 'NEW',
+    badgeType = 'primary',
+    imageUrl,
+    price,
+    onClick
+}) =&gt; {
+    return (
+        &lt;div className={styles.genesisCard} onClick={onClick}&gt;
+            {badgeText &amp;&amp; (
+                &lt;span className={`${styles.badge} ${styles[badgeType]}`}&gt;
+                    {badgeText}
+                &lt;/span&gt;
+            )}
+            {imageUrl &amp;&amp; &lt;img src={imageUrl} alt={title} className={styles.cardImage} /&gt;}
+            &lt;div className={styles.cardContent}&gt;
+                &lt;h3 className={styles.cardTitle}&gt;{title}&lt;/h3&gt;
+                {subtitle &amp;&amp; &lt;p className={styles.cardSubtitle}&gt;{subtitle}&lt;/p&gt;}
+                {price &amp;&amp; &lt;div className={styles.cardPrice}&gt;{price}&lt;/div&gt;}
+            &lt;/div&gt;
+        &lt;/div&gt;
+    );
+};</code></pre>
+                                </div>
+                            </div>
+
+                            <!-- Right: Claude AI Agent Sidebar -->
+                            <div class="ide-agent-sidebar">
+                                <div class="sidebar-header">
+                                    <div class="agent-avatar">🤖</div>
+                                    <div class="agent-name">
+                                        <strong>Claude AI Agent</strong>
+                                        <small>Connected to Jira + Git + DSPy</small>
+                                    </div>
+                                </div>
+
+                                <div class="sidebar-messages" id="agentChatMessages">
+                                    <div class="chat-msg system">
+                                        <span>System initialized. Click '▶ Run Live Agent Simulation' or type a prompt below.</span>
+                                    </div>
+                                </div>
+
+                                <div class="sidebar-input-box">
+                                    <input type="text" id="agentPromptInput" class="agent-input" value="Implement CMS-123 for Genesis Card component" placeholder="Type prompt..." />
+                                    <button class="agent-send-btn" onclick="startIdeAgentSimulation()">Send</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
     <script src="app.js"></script>
 </body>
 </html>
+

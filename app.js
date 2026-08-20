@@ -834,3 +834,726 @@ function runDspyDemo(index) {
         }
     }, 8);
 }
+
+
+// ==========================================
+// WORKFLOW MODAL CONTROL & NAVIGATION
+// ==========================================
+function openWorkflowModal() {
+    const modal = document.getElementById('workflowModal');
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeWorkflowModal() {
+    const modal = document.getElementById('workflowModal');
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+function handleModalBackdropClick(e) {
+    if (e.target && e.target.classList.contains('workflow-modal-overlay')) {
+        closeWorkflowModal();
+    }
+}
+
+// Close modal on Escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        closeWorkflowModal();
+    }
+});
+
+function switchModalTab(tabName, btn) {
+    // Tab buttons
+    document.querySelectorAll('.workflow-modal-tabs .modal-tab').forEach(t => t.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+
+    // Panes
+    document.querySelectorAll('.workflow-modal-body .modal-tab-pane').forEach(p => p.classList.remove('active'));
+    const pane = document.getElementById('modal-pane-' + tabName);
+    if (pane) pane.classList.add('active');
+}
+
+
+// ==========================================
+// TAB 1: FLOWCHART ANIMATION ENGINE
+// ==========================================
+function runFlowchartAnimation() {
+    const playBtn = document.getElementById('flowchartPlayBtn');
+    if (playBtn) {
+        playBtn.disabled = true;
+        playBtn.textContent = '⏳ Running Flow...';
+    }
+
+    const nodeSequence = [
+        { id: 'fn-human', conn: 'fc-conn-1', delay: 200 },
+        { id: 'fn-agent', conn: 'fc-conn-2', delay: 800 },
+        { id: 'fn-jira', delay: 1400 },
+        { id: 'fn-git', delay: 1550 },
+        { id: 'fn-mcp', conn: 'fc-conn-3', delay: 1700 },
+        { id: 'fn-context', conn: 'fc-conn-4', delay: 2400 },
+        { id: 'fn-dspy', conn: 'fc-conn-5', delay: 3100 },
+        { id: 'fn-llm', conn: 'fc-conn-6', delay: 3800 },
+        { id: 'fn-exec', conn: 'fc-conn-7', delay: 4500 },
+        { id: 'fn-code', conn: 'fc-conn-8', delay: 5200 },
+        { id: 'fn-test', delay: 5900 },
+        { id: 'fn-fail-branch', delay: 6600 },
+        { id: 'fn-pass-branch', delay: 7500 },
+        { id: 'fn-approval', delay: 8200 }
+    ];
+
+    // Reset all pulses
+    document.querySelectorAll('.fc-node, .fc-branch').forEach(n => n.classList.remove('pulse-active'));
+    document.querySelectorAll('.fc-connector-v').forEach(c => c.classList.remove('glow'));
+
+    nodeSequence.forEach(item => {
+        setTimeout(() => {
+            const el = document.getElementById(item.id);
+            if (el) el.classList.add('pulse-active');
+
+            if (item.conn) {
+                const connEl = document.getElementById(item.conn);
+                if (connEl) connEl.classList.add('glow');
+            }
+        }, item.delay);
+    });
+
+    setTimeout(() => {
+        if (playBtn) {
+            playBtn.disabled = false;
+            playBtn.textContent = '▶ Run Again';
+        }
+    }, 9000);
+}
+
+
+// ==========================================
+// TAB 2: FOLDER STRUCTURE CODE VIEWER
+// ==========================================
+const folderFileSnippets = {
+    dspy_sig: {
+        title: '🧩 src/dspy_signatures/genesis_card_signature.py',
+        code: `import dspy
+
+class GenesisCardSignature(dspy.Signature):
+    """
+    DSPy Task Signature for transforming CMS-123 Jira requirements 
+    and legacy HTML/CSS into a modern React GenesisCard component.
+    """
+    user_request   = dspy.InputField(desc="Original human prompt")
+    jira_ticket    = dspy.InputField(desc="JSON specification from CMS-123")
+    legacy_html    = dspy.InputField(desc="Legacy Genesis Card HTML & CSS markup")
+    existing_cards = dspy.InputField(desc="Existing Kia/Hyundai TSX component code")
+    project_rules  = dspy.InputField(desc="TypeScript & CSS module conventions")
+    
+    component_tsx  = dspy.OutputField(desc="Production-ready TypeScript React component")
+    module_css     = dspy.OutputField(desc="CSS Module with CSS variables and glassmorphic styling")
+    unit_tests     = dspy.OutputField(desc="Jest/Vitest test file covering all card states")
+    reasoning      = dspy.OutputField(desc="Architectural decisions & prop choices")`
+    },
+    dspy_mod: {
+        title: '🧩 src/dspy_signatures/component_generator.py',
+        code: `import dspy
+from genesis_card_signature import GenesisCardSignature
+
+class ComponentGeneratorModule(dspy.Module):
+    """
+    DSPy Teleprompter module that compiles structured inputs
+    into optimized LLM prompts with Chain-of-Thought reasoning.
+    """
+    def __init__(self):
+        super().__init__()
+        self.generator = dspy.ChainOfThought(GenesisCardSignature)
+
+    def forward(self, context_payload):
+        # Passes aggregated context straight into DSPy reasoning loop
+        prediction = self.generator(
+            user_request=context_payload["user_request"],
+            jira_ticket=context_payload["jira_ticket"],
+            legacy_html=context_payload["legacy_html"],
+            existing_cards=context_payload["existing_cards"],
+            project_rules=context_payload["project_rules"]
+        )
+        return prediction`
+    },
+    agent_orch: {
+        title: '🐍 src/agent/orchestrator.py',
+        code: `class AgentOrchestrator:
+    """
+    Primary Agent Router — interprets human intent, invokes MCP tools
+    (Jira, Git, Figma), builds relevant context, and calls DSPy.
+    """
+    def __init__(self, jira_tool, git_tool, dspy_module):
+        self.jira = jira_tool
+        self.git = git_tool
+        self.dspy = dspy_module
+
+    async def execute_task(self, prompt: str):
+        ticket_id = self.extract_ticket_id(prompt) # CMS-123
+        ticket_data = await self.jira.get_ticket(ticket_id)
+        legacy_code = await self.git.get_file("src/components/LegacyGenesisCard.html")
+        
+        context = self.build_context(prompt, ticket_data, legacy_code)
+        result = self.dspy(context)
+        return result`
+    },
+    agent_ctx: {
+        title: '🐍 src/agent/context_builder.py',
+        code: `def build_relevant_context(prompt, jira_ticket, legacy_code, test_feedback=None):
+    """
+    Aggregates user prompt, Jira specifications, legacy markup,
+    project conventions, and execution errors into a unified DSPy Context.
+    """
+    context = {
+        "user_request": prompt,
+        "jira_ticket": jira_ticket,
+        "legacy_html": legacy_code,
+        "project_rules": "Strict TypeScript, CSS Modules, Jest test suite.",
+        "previous_error": test_feedback or "None"
+    }
+    return context`
+    },
+    mcp_jira: {
+        title: '🔌 src/tools/jira_mcp.py',
+        code: `class JiraMCPTool:
+    """
+    Model Context Protocol (MCP) Tool for fetching Jira ticket details.
+    """
+    async def get_ticket(self, ticket_id: str):
+        # GET /rest/api/3/issue/CMS-123
+        return {
+            "id": ticket_id,
+            "title": "Redesign Genesis Card component",
+            "acceptance_criteria": [
+                "Dark glassmorphic styling",
+                "Badge prop with types (primary, success, warning)",
+                "Price field display",
+                "Click handler callback"
+            ]
+        }`
+    },
+    mcp_git: {
+        title: '🔌 src/tools/git_mcp.py',
+        code: `class GitMCPTool:
+    """
+    MCP tool for reading repo files, diffs, and existing component patterns.
+    """
+    async def get_file(self, filepath: str):
+        return """<div class="genesis-card-old">
+  <span class="badge">NEW</span>
+  <h3>Genesis G80</h3>
+  <p>$58,000</p>
+</div>"""`
+    },
+    test_runner: {
+        title: '🧪 src/tools/test_runner.py',
+        code: `import subprocess
+
+class TestRunnerTool:
+    """
+    Executes Jest / Vitest CLI unit tests and captures stdout/stderr.
+    """
+    def run_tests(self, test_file="src/components/GenesisCard.test.tsx"):
+        result = subprocess.run(["npx", "jest", test_file], capture_output=True, text=True)
+        return {
+            "passed": result.returncode == 0,
+            "output": result.stdout or result.stderr
+        }`
+    },
+    genesis_tsx: {
+        title: '⚛️ src/components/GenesisCard.tsx',
+        code: `import React from 'react';
+import styles from './GenesisCard.module.css';
+
+export interface GenesisCardProps {
+    title: string;
+    subtitle?: string;
+    badgeText?: string;
+    badgeType?: 'primary' | 'success' | 'warning';
+    imageUrl?: string;
+    price?: string;
+    onClick?: () => void;
+}
+
+export const GenesisCard: React.FC<GenesisCardProps> = ({
+    title,
+    subtitle,
+    badgeText = 'NEW',
+    badgeType = 'primary',
+    imageUrl,
+    price,
+    onClick
+}) => {
+    return (
+        <div className={styles.genesisCard} onClick={onClick}>
+            {badgeText && (
+                <span className={\`\${styles.badge} \${styles[badgeType]}\`}>
+                    {badgeText}
+                </span>
+            )}
+            {imageUrl && <img src={imageUrl} alt={title} className={styles.cardImage} />}
+            <div className={styles.cardContent}>
+                <h3 className={styles.cardTitle}>{title}</h3>
+                {subtitle && <p className={styles.cardSubtitle}>{subtitle}</p>}
+                {price && <div className={styles.cardPrice}>{price}</div>}
+            </div>
+        </div>
+    );
+};`
+    },
+    genesis_css: {
+        title: '🎨 src/components/GenesisCard.module.css',
+        code: `.genesisCard {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 24px;
+    backdrop-filter: blur(12px);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.genesisCard:hover {
+    transform: translateY(-4px);
+    border-color: rgba(0, 212, 255, 0.4);
+    box-shadow: 0 12px 30px rgba(0, 212, 255, 0.15);
+}
+
+.badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding: 4px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+}
+
+.primary { background: rgba(0, 212, 255, 0.2); color: #00d4ff; }
+.success { background: rgba(77, 255, 145, 0.2); color: #4dff91; }
+.warning { background: rgba(255, 166, 77, 0.2); color: #ffa64d; }`
+    },
+    genesis_test: {
+        title: '🧪 src/components/GenesisCard.test.tsx',
+        code: `import { render, screen, fireEvent } from '@testing-library/react';
+import { GenesisCard } from './GenesisCard';
+
+describe('GenesisCard Component (CMS-123)', () => {
+    test('renders card title and price correctly', () => {
+        render(<GenesisCard title="Genesis GV80" price="$65,000" />);
+        expect(screen.getByText('Genesis GV80')).toBeInDOM();
+        expect(screen.getByText('$65,000')).toBeInDOM();
+    });
+
+    test('handles click callback when clicked', () => {
+        const handleClick = jest.fn();
+        render(<GenesisCard title="Test Card" onClick={handleClick} />);
+        fireEvent.click(screen.getByText('Test Card'));
+        expect(handleClick).toHaveBeenCalledTimes(1);
+    });
+});`
+    },
+    skill_genesis: {
+        title: '📝 .claude/skills/genesis-card-migration.md',
+        code: `# Genesis Component Migration Skill
+
+Use this skill when converting legacy Hyundai/Genesis components into modern React TSX modules.
+
+## Guidelines
+1. Enforce Glassmorphism CSS Modules (\`GenesisCard.module.css\`).
+2. Add optional default badge fallback (\`NEW\`).
+3. Ensure 100% test coverage with Vitest/Jest.
+4. Auto-generate component prop interface.`
+    },
+    skill_review: {
+        title: '📝 .claude/skills/code-review.md',
+        code: `# Team Code Review Skill
+
+Checklist for automated PR reviews:
+- [ ] No inline styling (use CSS modules)
+- [ ] Explicit TypeScript interface exports
+- [ ] Accessibility aria tags present
+- [ ] Jest unit tests included`
+    },
+    mcp_config: {
+        title: '⚙️ .claude/mcp.json',
+        code: `{
+  "mcpServers": {
+    "jira": {
+      "command": "npx",
+      "args": ["-y", "@mcp/server-jira"]
+    },
+    "git": {
+      "command": "npx",
+      "args": ["-y", "@mcp/server-git"]
+    }
+  }
+}`
+    },
+    dspy_config: {
+        title: '🐍 dspy.config.py',
+        code: `import dspy
+
+# Configures DSPy with Anthropic Claude 3.5 Sonnet LLM
+lm = dspy.LM('anthropic/claude-3-5-sonnet-20241022')
+dspy.configure(lm=lm)`
+    }
+};
+
+function showFolderFileDetail(key, el) {
+    if (el) {
+        document.querySelectorAll('.tree-item').forEach(item => item.classList.remove('active'));
+        el.classList.add('active');
+    }
+
+    const detail = folderFileSnippets[key];
+    if (!detail) return;
+
+    const titleEl = document.getElementById('folderDetailTitle');
+    const codeEl = document.getElementById('folderDetailCode');
+    if (titleEl) titleEl.textContent = detail.title;
+    if (codeEl) codeEl.textContent = detail.code;
+}
+
+
+// ==========================================
+// TAB 3: VS CODE & AI AGENT LIVE SIMULATOR
+// ==========================================
+const ideFileContents = {
+    tsx: {
+        filename: 'src/components/GenesisCard.tsx',
+        code: `import React from 'react';
+import styles from './GenesisCard.module.css';
+
+export interface GenesisCardProps {
+    title: string;
+    subtitle?: string;
+    badgeText?: string;
+    badgeType?: 'primary' | 'success' | 'warning';
+    imageUrl?: string;
+    price?: string;
+    onClick?: () => void;
+}
+
+export const GenesisCard: React.FC<GenesisCardProps> = ({
+    title,
+    subtitle,
+    badgeText = 'NEW',
+    badgeType = 'primary',
+    imageUrl,
+    price,
+    onClick
+}) => {
+    return (
+        <div className={styles.genesisCard} onClick={onClick}>
+            {badgeText && (
+                <span className={\`\${styles.badge} \${styles[badgeType]}\`}>
+                    {badgeText}
+                </span>
+            )}
+            {imageUrl && <img src={imageUrl} alt={title} className={styles.cardImage} />}
+            <div className={styles.cardContent}>
+                <h3 className={styles.cardTitle}>{title}</h3>
+                {subtitle && <p className={styles.cardSubtitle}>{subtitle}</p>}
+                {price && <div className={styles.cardPrice}>{price}</div>}
+            </div>
+        </div>
+    );
+};`
+    },
+    sig: {
+        filename: 'src/dspy_signatures/genesis_card_signature.py',
+        code: `import dspy
+
+class GenesisCardSignature(dspy.Signature):
+    """DSPy Task Signature for CMS-123 Genesis Card Redesign"""
+    user_request = dspy.InputField()
+    jira_ticket  = dspy.InputField()
+    legacy_html  = dspy.InputField()
+    
+    component_tsx = dspy.OutputField()
+    unit_tests    = dspy.OutputField()`
+    },
+    context: {
+        filename: 'src/agent/context_payload.json',
+        code: `{
+  "task": "Implement CMS-123 for Genesis Card component",
+  "jira_ticket": {
+    "key": "CMS-123",
+    "summary": "Redesign Genesis Card Component",
+    "status": "IN_PROGRESS"
+  },
+  "legacy_files": ["src/components/LegacyCard.html"],
+  "dspy_signature": "GenesisCardSignature",
+  "framework": "React + TypeScript + CSS Modules"
+}`
+    },
+    test: {
+        filename: 'src/components/GenesisCard.test.tsx',
+        code: `import { render, screen } from '@testing-library/react';
+import { GenesisCard } from './GenesisCard';
+
+describe('GenesisCard (CMS-123)', () => {
+    it('renders Genesis title and default badge', () => {
+        render(<GenesisCard title="Genesis Electrified G80" />);
+        expect(screen.getByText('Genesis Electrified G80')).toBeInDOM();
+        expect(screen.getByText('NEW')).toBeInDOM();
+    });
+});`
+    },
+    term: {
+        filename: 'Terminal — npm test',
+        code: `> npx jest GenesisCard.test.tsx
+
+ PASS  src/components/GenesisCard.test.tsx
+  GenesisCard (CMS-123)
+    ✓ renders Genesis title and default badge (18 ms)
+    ✓ renders custom price and handles click (12 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       2 passed, 2 total
+Snapshots:   0 total
+Time:        0.942 s
+Ran all test suites matching /GenesisCard.test.tsx/i.`
+    }
+};
+
+function switchIdeTab(tabKey) {
+    document.querySelectorAll('.ide-file-tabs .ide-tab').forEach(t => t.classList.remove('active'));
+    const btn = document.getElementById('ideTab-' + tabKey);
+    if (btn) btn.classList.add('active');
+
+    const file = ideFileContents[tabKey];
+    if (!file) return;
+
+    const nameEl = document.getElementById('ideActiveFileName');
+    const codeEl = document.getElementById('ideCodeDisplay');
+    if (nameEl) nameEl.textContent = file.filename;
+    if (codeEl) codeEl.textContent = file.code;
+}
+
+let isSimulating = false;
+
+function startIdeAgentSimulation() {
+    if (isSimulating) return;
+    isSimulating = true;
+
+    const chatContainer = document.getElementById('agentChatMessages');
+    const runBtn = document.getElementById('ideRunBtn');
+    const promptInput = document.getElementById('agentPromptInput');
+    const promptText = promptInput ? promptInput.value || "Implement CMS-123 for Genesis Card component" : "Implement CMS-123 for Genesis Card component";
+
+    if (runBtn) runBtn.disabled = true;
+
+    // Helper to add chat msg
+    function appendChatMsg(type, htmlContent) {
+        const msg = document.createElement('div');
+        msg.className = `chat-msg ${type}`;
+        msg.innerHTML = htmlContent;
+        chatContainer.appendChild(msg);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    // Clear chat
+    chatContainer.innerHTML = '';
+    appendChatMsg('system', '🚀 Agent Session Started...');
+
+    // Step 1: User prompt
+    setTimeout(() => {
+        appendChatMsg('user', `👤 <strong>Human:</strong> "${promptText}"`);
+    }, 300);
+
+    // Step 2: Orchestrator triggers tools
+    setTimeout(() => {
+        appendChatMsg('agent', '🤖 <strong>Agent Orchestrator:</strong> Goal understood. Requesting Jira ticket <code>CMS-123</code> &amp; legacy code via MCP...');
+    }, 1000);
+
+    // Step 3: MCP Tool Result
+    setTimeout(() => {
+        appendChatMsg('tool', '🔌 <strong>Jira MCP:</strong> Ticket fetched — <em>"Redesign Genesis Card component with dark glassmorphism styling &amp; badge types"</em>');
+        switchIdeTab('context');
+    }, 1800);
+
+    // Step 4: DSPy Framework
+    setTimeout(() => {
+        appendChatMsg('agent', '🧩 <strong>DSPy Framework:</strong> Compiling <code>GenesisCardSignature</code> and optimizing teleprompter instructions...');
+        switchIdeTab('sig');
+    }, 2800);
+
+    // Step 5: LLM Code Gen
+    setTimeout(() => {
+        appendChatMsg('agent', '🧠 <strong>LLM Engine:</strong> Generating production-ready <code>GenesisCard.tsx</code> and Jest unit tests...');
+        switchIdeTab('tsx');
+    }, 3800);
+
+    // Step 6: Test Failure Simulation
+    setTimeout(() => {
+        appendChatMsg('tool', '🧪 <strong>Test Runner:</strong> Running <code>npm test</code>... ❌ 1 test failed (Missing default badge type parameter).');
+        switchIdeTab('term');
+        const codeEl = document.getElementById('ideCodeDisplay');
+        if (codeEl) {
+            codeEl.textContent = `FAIL src/components/GenesisCard.test.tsx
+  GenesisCard (CMS-123)
+    ✕ renders Genesis title and default badge (24 ms)
+
+  ● GenesisCard (CMS-123) › renders default badge
+
+    TypeError: Cannot read properties of undefined (reading 'primary')
+      at GenesisCard (src/components/GenesisCard.tsx:21:40)`;
+        }
+    }, 5000);
+
+    // Step 7: Self-Correction Loop
+    setTimeout(() => {
+        appendChatMsg('agent', '🔄 <strong>Self-Correction Loop:</strong> Error trace captured → Context updated → DSPy re-invoked → Applying default prop fix to <code>GenesisCard.tsx</code>...');
+        switchIdeTab('tsx');
+    }, 6200);
+
+    // Step 8: Retest PASS
+    setTimeout(() => {
+        appendChatMsg('tool', '🧪 <strong>Test Runner:</strong> Re-running <code>npm test</code>... ✅ 2/2 Tests PASS!');
+        switchIdeTab('term');
+        const codeEl = document.getElementById('ideCodeDisplay');
+        if (codeEl) {
+            codeEl.textContent = ideFileContents['term'].code;
+        }
+    }, 7400);
+
+    // Step 9: Final Pass & Approval
+    setTimeout(() => {
+        appendChatMsg('agent', '✅ <strong>Agent Complete:</strong> <code>GenesisCard.tsx</code> created, glassmorphic CSS styled, 2/2 unit tests green! Ready for Human Approval &amp; Merge Request.');
+        if (runBtn) runBtn.disabled = false;
+        isSimulating = false;
+    }, 8500);
+}
+
+
+// ==========================================
+// SLIDE 15: LINE-BY-LINE INSPECTOR & BUILTIN EXPLORER
+// ==========================================
+const dspyLineInspectData = {
+    sig_import: {
+        tag: '📦 TOOLKIT IMPORT',
+        title: 'import dspy',
+        html: '<p><strong>The Toolkit Import:</strong> Brings in the DSPy framework. Replaces writing long, messy prompt paragraphs with structured, reusable code tools.</p>'
+    },
+    sig_class: {
+        tag: '🧩 THE JOB CONTRACT',
+        title: 'class GenesisCardSignature(dspy.Signature):',
+        html: '<p><strong>The Job Contract (dspy.Signature):</strong> Like hiring an employee with a clear contract! You define: 1) What info you hand to the AI, and 2) What exact work it must deliver back.</p>'
+    },
+    sig_doc: {
+        tag: '📝 THE JOB DESCRIPTION',
+        title: '"""Transform CMS-123 Jira specs..."""',
+        html: '<p><strong>The Job Description:</strong> This single sentence tells the AI what it is hired to do. DSPy reads this description so you don\'t have to write 3 pages of system instructions!</p>'
+    },
+    sig_input: {
+        tag: '📥 INTAKE INGREDIENTS',
+        title: 'user_request = dspy.InputField(desc="...")',
+        html: '<p><strong>Intake Ingredients (InputField):</strong> The raw materials you feed into the AI! Tells the AI: "Here is the human goal, the Jira ticket specs, and the legacy code snippet".</p>'
+    },
+    sig_output: {
+        tag: '📤 GUARANTEED DELIVERABLES',
+        title: 'component_tsx = dspy.OutputField(desc="...")',
+        html: '<p><strong>Guaranteed Deliverables (OutputField):</strong> Forces the AI to give back clean, structured outputs (like <code>prediction.component_tsx</code>) instead of random conversational chit-chat!</p>'
+    },
+    mod_class: {
+        tag: '🏗️ WORKFLOW MANAGER',
+        title: 'class GenesisCardGenerator(dspy.Module):',
+        html: '<p><strong>The Workflow Manager (dspy.Module):</strong> A reusable pipeline class that packages your AI reasoning steps, tools, and safety rules together into one clean object.</p>'
+    },
+    mod_init: {
+        tag: '⚙️ WORKSPACE SETUP',
+        title: 'def __init__(self): super().__init__()',
+        html: '<p><strong>Workspace Setup:</strong> Prepares the AI workspace when your program starts. Connects your reasoning engines and tools (Jira MCP, Git MCP).</p>'
+    },
+    cot: {
+        tag: '🧠 SHOW YOUR WORK ENGINE',
+        title: 'self.thinker = dspy.ChainOfThought(GenesisCardSignature)',
+        html: '<p><strong>Show Your Work (ChainOfThought):</strong> Forces the AI to write down "Here is my step-by-step thinking..." <em>before</em> generating code. This prevents silly mistakes and boosts accuracy by 35%!</p>'
+    },
+    react: {
+        tag: '🤖 AUTONOMOUS ASSISTANT',
+        title: 'self.agent = dspy.ReAct(GenesisCardSignature, tools=[...])',
+        html: '<p><strong>The Do-Check-Fix Assistant (ReAct):</strong> An autonomous loop! The AI tries an action (like fetching a Jira ticket), inspects what happened, adjusts its plan, and loops until done.</p>'
+    },
+    mod_forward: {
+        tag: '▶ RUN THE WORKFLOW',
+        title: 'def forward(self, user_request, jira_ticket...):',
+        html: '<p><strong>The "Go" Button (forward):</strong> Takes your incoming data, runs it through the reasoning steps, enforces safety rules, and returns the finished code.</p>'
+    },
+    suggest: {
+        tag: '🛡️ QUALITY INSPECTOR',
+        title: 'dspy.Suggest(len(legacy_html) > 0, "...")',
+        html: '<p><strong>Quality Inspector (Suggest & Assert):</strong> A bouncer rule! If the AI generates empty code or breaks a rule, it automatically says: "Stop! Fix this error and try again".</p>'
+    },
+    predict_call: {
+        tag: '⚡ EXECUTE THINKING',
+        title: 'prediction = self.thinker(...)',
+        html: '<p><strong>Execute Thinking:</strong> Runs the Chain-of-Thought reasoning engine with your exact input data to produce the final component code.</p>'
+    },
+    result_ret: {
+        tag: '📦 RETURN FINISHED RESULT',
+        title: 'return prediction',
+        html: '<p><strong>Return Result:</strong> Hands back the compiled output object containing <code>prediction.component_tsx</code> and <code>prediction.reasoning</code> directly to your app.</p>'
+    },
+    teleprompter: {
+        tag: '⚡ AUTO-TUNING COACH',
+        title: 'teleprompter = dspy.teleprompt.BootstrapFewShot(...)',
+        html: '<p><strong>The Auto-Tuner (teleprompt):</strong> Instead of spending hours manually tweaking prompt text, this auto-tests 50 prompt variants against real test cases and picks the highest-scoring winner!</p>'
+    },
+    compile: {
+        tag: '🚀 SAVE OPTIMIZED PROGRAM',
+        title: 'compiled_agent = teleprompter.compile(...)',
+        html: '<p><strong>Save Optimized Program:</strong> Compiles and saves the winning auto-tuned prompt configuration so your AI runs faster, cheaper, and with maximum accuracy every time!</p>'
+    }
+};
+
+function inspectDspyLine(key, el) {
+    if (el) {
+        document.querySelectorAll('.code-line-row').forEach(row => row.classList.remove('active'));
+        el.classList.add('active');
+    }
+
+    const data = dspyLineInspectData[key];
+    if (!data) return;
+
+    const tagEl = document.getElementById('dspyInspTag');
+    const titleEl = document.getElementById('dspyInspTitle');
+    const bodyEl = document.getElementById('dspyInspBody');
+
+    if (tagEl) tagEl.textContent = data.tag;
+    if (titleEl) titleEl.textContent = data.title;
+    if (bodyEl) bodyEl.innerHTML = data.html;
+}
+
+function switchDspyBuiltin(key, btn) {
+    document.querySelectorAll('.explorer-tabs .ex-tab').forEach(t => t.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+
+    document.querySelectorAll('.explorer-panes .ex-pane').forEach(p => p.classList.remove('active'));
+    const pane = document.getElementById('exp-pane-' + key);
+    if (pane) pane.classList.add('active');
+}
+
+function switchDspyMasterSection(secKey, btn) {
+    document.querySelectorAll('.dspy-master-tabs .master-tab').forEach(t => t.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+
+    document.querySelectorAll('.dspy-master-pane').forEach(p => p.classList.remove('active'));
+    const pane = document.getElementById('dspy-sec-' + secKey);
+    if (pane) pane.classList.add('active');
+}
+
+
+
+
+
