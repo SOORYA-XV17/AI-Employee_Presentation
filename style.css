@@ -2501,6 +2501,137 @@ body {
     color: var(--accent-green);
 }
 
+/* IT Mental Models & Barista Analogy Grid */
+.dspy-mental-models {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.mm-card {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border-subtle);
+    border-radius: 14px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.mm-card.it-mapping-card {
+    border-color: rgba(167, 139, 250, 0.25);
+    background: rgba(167, 139, 250, 0.02);
+}
+
+.mm-card.barista-card {
+    border-color: rgba(77, 255, 145, 0.25);
+    background: rgba(77, 255, 145, 0.02);
+}
+
+.mm-header {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.mm-badge {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+}
+
+.mm-badge.purple { color: #a78bfa; }
+.mm-badge.green { color: var(--accent-green); }
+
+.mm-header h4 {
+    font-size: 0.92rem;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.it-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.it-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-size: 0.76rem;
+}
+
+.it-dspy code {
+    font-family: var(--font-mono);
+    color: #a78bfa;
+    background: rgba(167, 139, 250, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.72rem;
+}
+
+.it-arrow {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+.it-concept {
+    color: var(--text-secondary);
+}
+
+.it-concept strong {
+    color: var(--text-primary);
+}
+
+.it-concept em {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+.barista-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.b-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: 8px 10px;
+}
+
+.b-step.highlight-step {
+    border-color: rgba(77, 255, 145, 0.3);
+    background: rgba(77, 255, 145, 0.08);
+}
+
+.b-icon {
+    font-size: 1.1rem;
+    line-height: 1;
+}
+
+.b-content strong {
+    display: block;
+    font-size: 0.76rem;
+    color: var(--text-primary);
+}
+
+.b-content p {
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    margin: 2px 0 0 0;
+}
+
 /* Section titles */
 .dspy-section-title {
     font-size: 0.95rem;
