@@ -1553,6 +1553,69 @@ function switchDspyMasterSection(secKey, btn) {
     if (pane) pane.classList.add('active');
 }
 
+// ===========================
+// DSPY TELEPROMPTER / METRIC OPTIMIZER SIMULATOR
+// ===========================
+function runTeleprompterSim() {
+    const btn = document.getElementById('tpRunBtn');
+    const consoleLog = document.getElementById('tpConsoleLog');
+
+    const scoreA = document.getElementById('cand-score-A');
+    const barA = document.getElementById('cand-bar-A');
+    const verdictA = document.getElementById('cand-verdict-A');
+
+    const scoreB = document.getElementById('cand-score-B');
+    const barB = document.getElementById('cand-bar-B');
+    const verdictB = document.getElementById('cand-verdict-B');
+
+    const scoreC = document.getElementById('cand-score-C');
+    const barC = document.getElementById('cand-bar-C');
+    const verdictC = document.getElementById('cand-verdict-C');
+
+    if (!btn || !consoleLog) return;
+
+    btn.disabled = true;
+    btn.innerHTML = '<span>⏳ Running Teleprompter Optimizer...</span>';
+
+    // Reset scores & bars
+    scoreA.textContent = '0.0%'; barA.style.width = '0%'; verdictA.classList.remove('active');
+    scoreB.textContent = '0.0%'; barB.style.width = '0%'; verdictB.classList.remove('active');
+    scoreC.textContent = '0.0%'; barC.style.width = '0%'; verdictC.classList.remove('active');
+
+    consoleLog.textContent = '🚀 [Step 1/5] Initializing MIPROv2 Teleprompter with ticket_metric evaluation function...\nLoading 50 ground-truth test cases...';
+
+    // Step 2: Candidate A
+    setTimeout(() => {
+        barA.style.width = '62%';
+        scoreA.textContent = '62.0%';
+        verdictA.classList.add('active');
+        consoleLog.textContent += '\n⚡ [Step 2/5] Evaluated Candidate A (Short Direct Instruction) → Metric Score: 62.0%\n   ⚠️ Output fails on ambiguous & multi-intent support tickets.';
+    }, 1000);
+
+    // Step 3: Candidate B
+    setTimeout(() => {
+        barB.style.width = '94.5%';
+        scoreB.textContent = '94.5%';
+        verdictB.classList.add('active');
+        consoleLog.textContent += '\n⚡ [Step 3/5] Evaluated Candidate B (Chain-of-Thought + Rules) → Metric Score: 94.5%\n   ✅ Step-by-step reasoning solved 47/50 test cases cleanly.';
+    }, 2200);
+
+    // Step 4: Candidate C
+    setTimeout(() => {
+        barC.style.width = '81%';
+        scoreC.textContent = '81.0%';
+        verdictC.classList.add('active');
+        consoleLog.textContent += '\n⚡ [Step 4/5] Evaluated Candidate C (Strict Persona / Strict JSON) → Metric Score: 81.0%\n   ℹ️ Perfect JSON syntax, but missed nuanced priority categorization.';
+    }, 3400);
+
+    // Step 5: Final Winner Selection
+    setTimeout(() => {
+        consoleLog.textContent += '\n\n🏆 [Step 5/5] TELEPROMPTER COMPILATION COMPLETE:\n   Selected Candidate B (94.5% score) as the compiled instruction for production execution!';
+        btn.disabled = false;
+        btn.innerHTML = '<span>⚡ Re-Run Teleprompter Optimization</span>';
+    }, 4500);
+}
+
 
 
 

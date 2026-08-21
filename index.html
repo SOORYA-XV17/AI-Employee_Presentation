@@ -1406,6 +1406,7 @@ summarizer = dspy.ChainOfThought(MeetingSummary)</pre>
                 <div class="dspy-master-tabs animate-in" data-delay="200">
                     <button class="master-tab active" onclick="switchDspyMasterSection('table', this)">📊 API Building Blocks &amp; One-Liners</button>
                     <button class="master-tab" onclick="switchDspyMasterSection('flows', this)">⚡ Simple &amp; Optimization Flows</button>
+                    <button class="master-tab" onclick="switchDspyMasterSection('teleprompter', this)">🎯 Teleprompter &amp; Metric Selection</button>
                     <button class="master-tab" onclick="switchDspyMasterSection('cmsexample', this)">⚛️ CMS Component Example</button>
                     <button class="master-tab" onclick="switchDspyMasterSection('lineinspector', this)">🔍 Line-by-Line Inspector</button>
                 </div>
@@ -1543,6 +1544,130 @@ summarizer = dspy.ChainOfThought(MeetingSummary)</pre>
                             </div>
                         </div>
 
+                    </div>
+                </div>
+
+                <!-- SECTION 3: TELEPROMPTER & METRIC SELECTION -->
+                <div class="dspy-master-pane" id="dspy-sec-teleprompter">
+                    <div class="teleprompter-container">
+                        <!-- Top Info Header -->
+                        <div class="tp-header-card">
+                            <div class="tp-header-title">
+                                <span class="tp-badge">🎯 TELEPROMPTER / OPTIMIZER DEMO</span>
+                                <h3>How DSPy Teleprompters Auto-Select Candidate Prompts via Metrics</h3>
+                            </div>
+                            <p class="tp-header-desc">
+                                Instead of humans writing trial-and-error prompts, a <strong>Teleprompter</strong> (DSPy Optimizer) automatically generates candidate prompts (Candidates A, B, C), evaluates them against a <strong>Metric function</strong> over test datasets, and selects the candidate with the highest score.
+                            </p>
+                            <div class="tp-formula-bar">
+                                <span class="formula-label">Metric Scoring Formula:</span>
+                                <code>Score = (Exact Category Match × 40%) + (Urgency Accuracy × 40%) + (JSON Validity × 20%)</code>
+                            </div>
+                        </div>
+
+                        <!-- Interactive Candidates Grid -->
+                        <div class="tp-candidates-grid">
+
+                            <!-- Candidate A -->
+                            <div class="tp-candidate-card" id="cand-card-A">
+                                <div class="cand-header">
+                                    <span class="cand-tag text-red">CANDIDATE A</span>
+                                    <h4>Short Direct Instruction</h4>
+                                </div>
+                                <div class="cand-prompt">
+                                    <code>"Classify support ticket concisely with category and urgency level."</code>
+                                </div>
+                                <div class="cand-metric-section">
+                                    <div class="metric-header">
+                                        <span>Metric Score</span>
+                                        <span class="cand-score text-red" id="cand-score-A">0.0%</span>
+                                    </div>
+                                    <div class="cand-bar-track">
+                                        <div class="cand-bar-fill bg-red" id="cand-bar-A" style="width: 0%;"></div>
+                                    </div>
+                                </div>
+                                <div class="cand-verdict" id="cand-verdict-A">
+                                    <span class="verdict-tag fail">❌ Rejected (Fails complex edge cases)</span>
+                                </div>
+                            </div>
+
+                            <!-- Candidate B -->
+                            <div class="tp-candidate-card" id="cand-card-B">
+                                <div class="cand-header">
+                                    <span class="cand-tag text-green">CANDIDATE B 🏆</span>
+                                    <h4>Chain-of-Thought + Guided Rules</h4>
+                                </div>
+                                <div class="cand-prompt">
+                                    <code>"Analyze customer issue step-by-step. Identify root cause, verify financial/security severity rules, then output category &amp; urgency."</code>
+                                </div>
+                                <div class="cand-metric-section">
+                                    <div class="metric-header">
+                                        <span>Metric Score</span>
+                                        <span class="cand-score text-green" id="cand-score-B">0.0%</span>
+                                    </div>
+                                    <div class="cand-bar-track">
+                                        <div class="cand-bar-fill bg-green" id="cand-bar-B" style="width: 0%;"></div>
+                                    </div>
+                                </div>
+                                <div class="cand-verdict" id="cand-verdict-B">
+                                    <span class="verdict-tag pass">🏆 WINNER — Compiled into Production</span>
+                                </div>
+                            </div>
+
+                            <!-- Candidate C -->
+                            <div class="tp-candidate-card" id="cand-card-C">
+                                <div class="cand-header">
+                                    <span class="cand-tag text-orange">CANDIDATE C</span>
+                                    <h4>Strict Persona / Strict Format</h4>
+                                </div>
+                                <div class="cand-prompt">
+                                    <code>"You are an expert support lead. Output ONLY a valid JSON object with fields category and urgency. No extra words."</code>
+                                </div>
+                                <div class="cand-metric-section">
+                                    <div class="metric-header">
+                                        <span>Metric Score</span>
+                                        <span class="cand-score text-orange" id="cand-score-C">0.0%</span>
+                                    </div>
+                                    <div class="cand-bar-track">
+                                        <div class="cand-bar-fill bg-orange" id="cand-bar-C" style="width: 0%;"></div>
+                                    </div>
+                                </div>
+                                <div class="cand-verdict" id="cand-verdict-C">
+                                    <span class="verdict-tag sub">⚠️ Sub-optimal (Good JSON, lower accuracy)</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Teleprompter Control & Log Output -->
+                        <div class="tp-control-panel">
+                            <button class="tp-run-btn" id="tpRunBtn" onclick="runTeleprompterSim()">
+                                <span>⚡ Run Teleprompter Optimization &amp; Metric Evaluation</span>
+                            </button>
+                            <div class="tp-console-box" id="tpConsole">
+                                <div class="tp-console-header">
+                                    <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                                    <span>DSPy Optimizer Terminal — MIPROv2 Teleprompter</span>
+                                </div>
+                                <pre class="tp-console-log" id="tpConsoleLog">Click '⚡ Run Teleprompter Optimization' to evaluate Candidates A, B, and C against metrics and watch DSPy auto-select Candidate B...</pre>
+                            </div>
+                        </div>
+
+                        <!-- DSPy Code Implementation Snippet -->
+                        <div class="tp-code-footer">
+                            <div class="tp-code-title">🐍 How this is written in DSPy Python:</div>
+                            <pre class="tp-code-pre"><code><span class="comment"># 1. Define Metric function</span>
+<span class="kw">def</span> <span class="fn">ticket_metric</span>(example, pred, trace=<span class="kw">None</span>):
+    exact_cat = (pred.category == example.category)
+    exact_urg = (pred.urgency == example.urgency)
+    <span class="kw">return</span> 0.5 * exact_cat + 0.5 * exact_urg
+
+<span class="comment"># 2. Instantiate Teleprompter (MIPROv2 Optimizer)</span>
+teleprompter = dspy.<span class="fn">MIPROv2</span>(metric=ticket_metric, auto=<span class="str">"light"</span>)
+
+<span class="comment"># 3. Teleprompter evaluates candidate prompts (A, B, C) against test dataset &amp; compiles winning Candidate B</span>
+compiled_program = teleprompter.<span class="fn">compile</span>(TicketClassifier(), trainset=trainset)</code></pre>
+                        </div>
                     </div>
                 </div>
 
