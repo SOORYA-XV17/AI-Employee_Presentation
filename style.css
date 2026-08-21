@@ -4772,15 +4772,115 @@ body {
     margin-bottom: 6px;
 }
 
-.tp-code-pre {
+/* Enterprise Folder Structure Card */
+.tp-folder-card {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.folder-header {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.folder-badge {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    color: #a78bfa;
+}
+
+.folder-header h4 {
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.folder-split {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 14px;
+}
+
+.folder-tree-box {
+    background: #0b0c10;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 12px;
+}
+
+.folder-tree-pre {
     font-family: var(--font-mono);
     font-size: 0.74rem;
-    line-height: 1.5;
+    line-height: 1.45;
     margin: 0;
     color: var(--text-primary);
 }
 
+.folder-tree-pre .dir {
+    color: #82aaff;
+    font-weight: 700;
+}
+
+.folder-tree-pre .file {
+    color: var(--accent-cyan);
+}
+
+.folder-tree-pre .comment {
+    color: var(--text-muted);
+}
+
+.folder-explanation-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+}
+
+.exp-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: 10px 12px;
+}
+
+.exp-num {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: rgba(167, 139, 250, 0.2);
+    color: #a78bfa;
+    font-size: 0.72rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.exp-text {
+    font-size: 0.76rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+.exp-text strong {
+    color: var(--text-primary);
+}
+
 @media (max-width: 900px) {
+    .folder-split {
+        grid-template-columns: 1fr;
+    }
     .tp-candidates-grid {
         grid-template-columns: 1fr;
     }

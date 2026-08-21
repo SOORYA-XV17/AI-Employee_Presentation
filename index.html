@@ -1733,6 +1733,56 @@ teleprompter = dspy.<span class="fn">MIPROv2</span>(metric=ticket_metric, auto=<
 <span class="comment"># 3. Teleprompter evaluates candidate prompts (A, B, C) against test dataset &amp; compiles winning Candidate B</span>
 compiled_program = teleprompter.<span class="fn">compile</span>(TicketClassifier(), trainset=trainset)</code></pre>
                         </div>
+
+                        <!-- Enterprise Folder Structure Card -->
+                        <div class="tp-folder-card">
+                            <div class="folder-header">
+                                <span class="folder-badge">📁 ENTERPRISE DSPY REPO STRUCTURE</span>
+                                <h4>How a Real Production DSPy Project is Organized</h4>
+                            </div>
+                            <div class="folder-split">
+                                <div class="folder-tree-box">
+                                    <pre class="folder-tree-pre"><code><span class="dir">ai_employee_service/</span>
+│
+├── <span class="file">config.py</span>                 <span class="comment"># LLM API setup (Claude / OpenAI)</span>
+│
+├── <span class="dir">signatures/</span>               <span class="comment"># 1. WHAT tasks do</span>
+│   ├── <span class="file">ticket_signature.py</span>   <span class="comment"># TicketClassifier signature class</span>
+│   └── <span class="file">code_signature.py</span>     <span class="comment"># CodeReviewer signature class</span>
+│
+├── <span class="dir">metrics/</span>                  <span class="comment"># 2. HOW to grade tasks</span>
+│   ├── <span class="file">ticket_metrics.py</span>     <span class="comment"># ticket_metric() calculation rule</span>
+│   └── <span class="file">code_metrics.py</span>       <span class="comment"># code_review_metric() rule</span>
+│
+├── <span class="dir">datasets/</span>                 <span class="comment"># 3. Ground Truth Data</span>
+│   ├── <span class="file">train_tickets.json</span>    <span class="comment"># 50 training examples</span>
+│   └── <span class="file">test_tickets.json</span>     <span class="comment"># 20 validation examples</span>
+│
+├── <span class="file">train_optimizer.py</span>        <span class="comment"># 4. BUILD-TIME OPTIMIZER SCRIPT</span>
+│                             <span class="comment"># Evaluates candidates A, B, C → saves winning JSON</span>
+│
+├── <span class="dir">compiled_programs/</span>        <span class="comment"># 5. SAVED WINNING PROGRAMS</span>
+│   └── <span class="file">ticket_classifier_v1.json</span>  <span class="comment"># Compiled winning Candidate B</span>
+│
+└── <span class="file">app.py</span>                    <span class="comment"># 6. PRODUCTION RUNTIME</span>
+                              <span class="comment"># Loads compiled JSON &amp; serves live requests fast!</span></code></pre>
+                                </div>
+                                <div class="folder-explanation-box">
+                                    <div class="exp-step">
+                                        <div class="exp-num">1</div>
+                                        <div class="exp-text"><strong>Separation of Concerns:</strong> Signatures, Metrics, Datasets, and Production code live in clean dedicated modules.</div>
+                                    </div>
+                                    <div class="exp-step">
+                                        <div class="exp-num">2</div>
+                                        <div class="exp-text"><strong>No Hardcoded Prompts:</strong> <code>train_optimizer.py</code> automatically generates &amp; tests candidate prompt variants behind the scenes.</div>
+                                    </div>
+                                    <div class="exp-step">
+                                        <div class="exp-num">3</div>
+                                        <div class="exp-text"><strong>Zero-Overhead Runtime:</strong> Production <code>app.py</code> loads <code>ticket_classifier_v1.json</code> directly—metrics never run during live user requests!</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
