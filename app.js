@@ -204,17 +204,36 @@
     }
 
     function handleKeydown(e) {
+        // Ignore if user is inside form inputs
+        if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+
+        const currentSlideEl = dom.slides[state.currentSlide];
+        const isScrollable = currentSlideEl && (currentSlideEl.scrollHeight > currentSlideEl.clientHeight + 10);
+
         switch (e.key) {
             case 'ArrowRight':
-            case 'ArrowDown':
-            case ' ':
-            case 'PageDown':
                 e.preventDefault();
                 nextSlide();
                 break;
             case 'ArrowLeft':
+                e.preventDefault();
+                prevSlide();
+                break;
+            case 'ArrowDown':
+            case 'PageDown':
+                if (isScrollable) {
+                    const atBottom = currentSlideEl.scrollTop + currentSlideEl.clientHeight >= currentSlideEl.scrollHeight - 15;
+                    if (!atBottom) return; // Let current slide scroll down naturally!
+                }
+                e.preventDefault();
+                nextSlide();
+                break;
             case 'ArrowUp':
             case 'PageUp':
+                if (isScrollable) {
+                    const atTop = currentSlideEl.scrollTop <= 10;
+                    if (!atTop) return; // Let current slide scroll up naturally!
+                }
                 e.preventDefault();
                 prevSlide();
                 break;
@@ -230,21 +249,35 @@
     }
 
     // ===========================
-    // TOUCH HANDLING
+    // TOUCH HANDLING (SMART SWIPE GUARD)
     // ===========================
     function handleTouchStart(e) {
-        state.touchStartX = e.changedTouches[0].screenX;
-        state.touchStartY = e.changedTouches[0].screenY;
+        state.touchStartX = e.changedTouches[0].clientX;
+        state.touchStartY = e.changedTouches[0].clientY;
     }
 
     function handleTouchEnd(e) {
-        const touchEndX = e.changedTouches[0].screenX;
-        const touchEndY = e.changedTouches[0].screenY;
+        const touchEndX = e.changedTouches[0].clientX;
+        const touchEndY = e.changedTouches[0].clientY;
         const diffX = state.touchStartX - touchEndX;
         const diffY = state.touchStartY - touchEndY;
 
-        // Only trigger if horizontal swipe is dominant and significant
-        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+        const currentSlideEl = dom.slides[state.currentSlide];
+        const isScrollable = currentSlideEl && (currentSlideEl.scrollHeight > currentSlideEl.clientHeight + 10);
+
+        // 1. If vertical drag is noticeable (> 35px), user is scrolling up/down — do NOT swipe slides!
+        if (Math.abs(diffY) > 35) return;
+
+        // 2. If the current slide has scrollable content and is NOT at boundary, ignore swipes
+        if (isScrollable) {
+            const scrollTop = currentSlideEl.scrollTop;
+            const atTop = scrollTop <= 5;
+            const atBottom = scrollTop + currentSlideEl.clientHeight >= currentSlideEl.scrollHeight - 15;
+            if (!atTop && !atBottom) return;
+        }
+
+        // 3. Only trigger horizontal slide swipe if diffX is strictly dominant (diffX >= 2.5 * diffY) and > 75px
+        if (Math.abs(diffX) > Math.abs(diffY) * 2.5 && Math.abs(diffX) > 75) {
             if (diffX > 0) {
                 nextSlide();
             } else {
@@ -272,15 +305,15 @@
             const scrollTop = currentSlideEl.scrollTop;
             const scrollHeight = currentSlideEl.scrollHeight;
             const clientHeight = currentSlideEl.clientHeight;
-            const hasScroll = scrollHeight > clientHeight + 5;
+            const hasScroll = scrollHeight > clientHeight + 10;
 
             if (hasScroll) {
-                const atTop = scrollTop <= 1;
-                const atBottom = scrollTop + clientHeight >= scrollHeight - 5;
+                const atTop = scrollTop <= 5;
+                const atBottom = scrollTop + clientHeight >= scrollHeight - 15;
 
                 // If scrolling down but not at bottom, OR scrolling up but not at top — let the slide scroll
                 if ((e.deltaY > 0 && !atBottom) || (e.deltaY < 0 && !atTop)) {
-                    return; // Don't prevent default — let the slide scroll naturally
+                    return; // Don't prevent default — let the slide scroll naturally!
                 }
             }
         }
