@@ -1649,6 +1649,148 @@ function runTeleprompterSim() {
     }, 4500);
 }
 
+// ===========================
+// FOLDER STRUCTURE INTERACTIVE HOVER CODE PREVIEWS
+// ===========================
+(function initFolderHoverPreviews() {
+    const fileCodePreviews = {
+        config: {
+            filename: "config.py",
+            code: `import dspy
+
+# Configure LLM provider & API keys
+lm = dspy.LM("anthropic/claude-3-5-sonnet-20241022")
+dspy.configure(lm=lm)`
+        },
+        ticket_sig: {
+            filename: "signatures/ticket_signature.py",
+            code: `import dspy
+
+class TicketClassifier(dspy.Signature):
+    """Classify customer support ticket intent & severity"""
+    ticket   = dspy.InputField(desc="Raw user ticket text")
+    category = dspy.OutputField(desc="billing | bug | feature | general")
+    urgency  = dspy.OutputField(desc="1-5 priority scale")`
+        },
+        code_sig: {
+            filename: "signatures/code_signature.py",
+            code: `import dspy
+
+class CodeReviewer(dspy.Signature):
+    """Review pull request code for security & performance bugs"""
+    code     = dspy.InputField(desc="Source code snippet")
+    bugs     = dspy.OutputField(desc="List of detected bugs")
+    severity = dspy.OutputField(desc="LOW | MEDIUM | HIGH | CRITICAL")
+    fix      = dspy.OutputField(desc="Suggested code fix")`
+        },
+        ticket_met: {
+            filename: "metrics/ticket_metrics.py",
+            code: `def ticket_metric(example, pred, trace=None):
+    exact_cat = (pred.category == example.category)
+    exact_urg = (pred.urgency == example.urgency)
+    return 0.5 * exact_cat + 0.5 * exact_urg`
+        },
+        code_met: {
+            filename: "metrics/code_metrics.py",
+            code: `def code_review_metric(example, pred, trace=None):
+    has_bugs_match = (bool(pred.bugs) == bool(example.bugs))
+    valid_severity = pred.severity in ["LOW", "MEDIUM", "HIGH", "CRITICAL"]
+    return 0.6 * has_bugs_match + 0.4 * valid_severity`
+        },
+        train_data: {
+            filename: "datasets/train_tickets.json",
+            code: `[
+  {
+    "ticket": "Charged twice for subscription renewal",
+    "category": "billing",
+    "urgency": 5
+  },
+  {
+    "ticket": "Logout button unresponsive on iOS Chrome",
+    "category": "bug",
+    "urgency": 3
+  }
+]`
+        },
+        test_data: {
+            filename: "datasets/test_tickets.json",
+            code: `[
+  {
+    "ticket": "Can we export reports to CSV?",
+    "category": "feature",
+    "urgency": 2
+  }
+]`
+        },
+        optimizer_script: {
+            filename: "train_optimizer.py",
+            code: `import dspy
+from signatures.ticket_signature import TicketClassifier
+from metrics.ticket_metrics import ticket_metric
+
+# 1. Load dataset & Teleprompter
+trainset = [...]
+teleprompter = dspy.MIPROv2(metric=ticket_metric, auto="light")
+
+# 2. Evaluate candidates A, B, C & compile winning Candidate B
+compiled_program = teleprompter.compile(TicketClassifier(), trainset=trainset)
+
+# 3. Save winning program
+compiled_program.save("compiled_programs/ticket_classifier_v1.json")`
+        },
+        compiled_json: {
+            filename: "compiled_programs/ticket_classifier_v1.json",
+            code: `{
+  "ticket_classifier": {
+    "lm": "claude-3-5-sonnet",
+    "selected_candidate": "Candidate B (Chain-of-Thought + Guided Rules)",
+    "compiled_instruction": "Analyze customer issue step-by-step. Identify root cause...",
+    "demos": [{"ticket": "...", "category": "billing", "urgency": 5}]
+  }
+}`
+        },
+        prod_app: {
+            filename: "app.py",
+            code: `from fastapi import FastAPI
+import dspy
+from signatures.ticket_signature import TicketClassifier
+
+app = FastAPI()
+
+# Load compiled program (Candidate B) instantly
+program = dspy.ChainOfThought(TicketClassifier)
+program.load("compiled_programs/ticket_classifier_v1.json")
+
+@app.post("/classify")
+def classify_ticket(ticket: str):
+    return program(ticket=ticket)  # Zero metric overhead in production!`
+        }
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const fileItems = document.querySelectorAll('.file-item');
+        const filenameEl = document.getElementById('folderPreviewFilename');
+        const codeEl = document.getElementById('folderPreviewCode');
+
+        if (!fileItems.length || !filenameEl || !codeEl) return;
+
+        fileItems.forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                const key = item.getAttribute('data-file');
+                const data = fileCodePreviews[key];
+
+                fileItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+
+                if (data) {
+                    filenameEl.textContent = data.filename;
+                    codeEl.textContent = data.code;
+                }
+            });
+        });
+    });
+})();
+
 
 
 

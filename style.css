@@ -4804,7 +4804,7 @@ body {
 
 .folder-split {
     display: grid;
-    grid-template-columns: 1.2fr 1fr;
+    grid-template-columns: 1.1fr 1fr;
     gap: 14px;
 }
 
@@ -4818,9 +4818,29 @@ body {
 .folder-tree-pre {
     font-family: var(--font-mono);
     font-size: 0.74rem;
-    line-height: 1.45;
+    line-height: 1.5;
     margin: 0;
     color: var(--text-primary);
+}
+
+.file-item {
+    cursor: pointer;
+    padding: 2px 4px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+.file-item:hover,
+.file-item.active {
+    background: rgba(167, 139, 250, 0.2);
+    box-shadow: 0 0 10px rgba(167, 139, 250, 0.3);
+}
+
+.file-item:hover .file,
+.file-item.active .file {
+    color: #a78bfa !important;
+    font-weight: 700;
 }
 
 .folder-tree-pre .dir {
@@ -4836,45 +4856,45 @@ body {
     color: var(--text-muted);
 }
 
-.folder-explanation-box {
+/* Dynamic Code Hover Preview Box */
+.folder-preview-box {
+    background: #0b0c10;
+    border: 1px solid rgba(167, 139, 250, 0.3);
+    border-radius: 8px;
+    padding: 12px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
-.exp-step {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid var(--border-subtle);
-    border-radius: 8px;
-    padding: 10px 12px;
-}
-
-.exp-num {
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    background: rgba(167, 139, 250, 0.2);
-    color: #a78bfa;
-    font-size: 0.72rem;
-    font-weight: 700;
+.preview-header {
     display: flex;
     align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
+    gap: 6px;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding-bottom: 6px;
 }
 
-.exp-text {
-    font-size: 0.76rem;
-    color: var(--text-secondary);
-    line-height: 1.4;
+.preview-filename {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: #a78bfa;
+    margin-left: 6px;
 }
 
-.exp-text strong {
-    color: var(--text-primary);
+.preview-code-pre {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    line-height: 1.5;
+    color: var(--accent-green);
+    margin: 0;
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-height: 250px;
+    overflow-y: auto;
 }
 
 @media (max-width: 900px) {
