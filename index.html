@@ -1565,6 +1565,71 @@ summarizer = dspy.ChainOfThought(MeetingSummary)</pre>
                             </div>
                         </div>
 
+                        <!-- Visual Optimizer Execution Flowchart -->
+                        <div class="tp-flowchart-card">
+                            <div class="flowchart-title">
+                                <span class="flowchart-badge">🔄 OPTIMIZER VS PRODUCTION RUNTIME FLOW</span>
+                                <h4>Where Does the Metric Function Actually Run?</h4>
+                            </div>
+                            <div class="flowchart-split">
+
+                                <!-- Phase 1: Optimization / Build Time -->
+                                <div class="flow-phase-box build-phase">
+                                    <div class="phase-badge purple">PHASE 1: OPTIMIZATION TIME (Offline / Build-Time)</div>
+                                    <div class="phase-flow-nodes">
+                                        <div class="pf-node">
+                                            <span class="pf-emoji">📊</span>
+                                            <strong>Test Dataset</strong>
+                                            <span class="pf-sub">50 Ground Truths</span>
+                                        </div>
+                                        <div class="pf-arrow">➔</div>
+                                        <div class="pf-node">
+                                            <span class="pf-emoji">🤖</span>
+                                            <strong>LLM Candidates</strong>
+                                            <span class="pf-sub">Prompts A, B, C</span>
+                                        </div>
+                                        <div class="pf-arrow">➔</div>
+                                        <div class="pf-node highlight-node">
+                                            <span class="pf-emoji">🎯</span>
+                                            <strong>Optimizer Runs Metric</strong>
+                                            <span class="pf-sub"><code>Score = Metric(exp, pred)</code></span>
+                                        </div>
+                                    </div>
+                                    <div class="phase-footer-note">
+                                        ⚡ Metric formula runs here to grade candidates (62% vs 94.5% vs 81%) &amp; auto-select Candidate B!
+                                    </div>
+                                </div>
+
+                                <!-- Phase 2: Production / Live Runtime -->
+                                <div class="flow-phase-box prod-phase">
+                                    <div class="phase-badge green">PHASE 2: PRODUCTION RUNTIME (Live User Tasks)</div>
+                                    <div class="phase-flow-nodes">
+                                        <div class="pf-node">
+                                            <span class="pf-emoji">👤</span>
+                                            <strong>Live Request</strong>
+                                            <span class="pf-sub">User Input</span>
+                                        </div>
+                                        <div class="pf-arrow">➔</div>
+                                        <div class="pf-node winner-node">
+                                            <span class="pf-emoji">⚡</span>
+                                            <strong>Compiled Program</strong>
+                                            <span class="pf-sub">Winning Candidate B</span>
+                                        </div>
+                                        <div class="pf-arrow">➔</div>
+                                        <div class="pf-node">
+                                            <span class="pf-emoji">✅</span>
+                                            <strong>Fast AI Output</strong>
+                                            <span class="pf-sub">No metric overhead!</span>
+                                        </div>
+                                    </div>
+                                    <div class="phase-footer-note">
+                                        🚀 Metric function is <strong>NOT</strong> run in production — the agent executes live requests at full speed!
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
                         <!-- Interactive Candidates Grid -->
                         <div class="tp-candidates-grid">
 
